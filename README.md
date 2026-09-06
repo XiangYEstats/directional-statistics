@@ -2,6 +2,17 @@
 
 Xiang Ye’s research website, built with Python and Jinja into `docs/`.
 
+## Public website
+
+**Website: [https://xiangyestats.github.io/directional-statistics/](https://xiangyestats.github.io/directional-statistics/)**
+
+[GitHub repository](https://github.com/XiangYEstats/directional-statistics)
+contains the source code; the GitHub Pages link above is the website for readers.
+
+Public links: [Research](https://xiangyestats.github.io/directional-statistics/research/),
+[Tutorials](https://xiangyestats.github.io/directional-statistics/tutorials/),
+[Density explorer](https://xiangyestats.github.io/directional-statistics/circular-outcomes/#lavm-distribution).
+
 ## Local preview
 
 ```bash
@@ -58,10 +69,20 @@ Replace the quoted text with a short description of the update. Build, validate
 and preview first. This command assumes your helper exists at that path and
 Git permissions are configured. The website build does not run it automatically.
 
-For initial GitHub Pages setup, set `SITE["url"]` in `site_data.py` to the public
-site address, rebuild, and publish the generated `docs/` folder from your chosen
-branch. Keep both source and `docs/` in the repository; do not commit `.venv/`.
-Use public tutorial URLs, not localhost links, when linking from your personal site.
+For initial GitHub Pages setup:
+
+1. Set `SITE["url"]` in `site_data.py` to
+   `https://xiangyestats.github.io/directional-statistics`, then rebuild.
+2. Push the source and generated `docs/` to `main`; do not commit `.venv/`.
+3. In [repository Settings → Pages](https://github.com/XiangYEstats/directional-statistics/settings/pages),
+   select **Deploy from a branch → main → /docs**, then save.
+4. Wait for the Pages deployment to succeed, then open the public website above.
+
+If the public link returns **404**, check the publishing source and the
+[Pages deployment in Actions](https://github.com/XiangYEstats/directional-statistics/actions).
+See [GitHub’s publishing-source guide](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
+for the branch/folder settings. Use public tutorial URLs, not localhost links,
+when linking from your personal site.
 
 ## Where to edit
 
