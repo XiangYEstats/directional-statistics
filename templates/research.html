@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-heading shell"><a class="back-link" href="{{ url('research/') }}">← Research overview</a><p class="eyebrow">{{ topic.eyebrow }}</p><h1 class="research-title">{{ topic.title }}</h1><p class="page-lede">{{ topic.intro }}</p></section>
+<section class="section shell research-detail"{% if topic.key == 'circular-outcomes' %} id="lavm-distribution"{% endif %}>
+  <div class="research-body"><p class="eyebrow">THE RESEARCH</p><h2>{{ topic.heading }}</h2><p>{{ topic.body }}</p>
+    <div class="paper-reference"><span class="eyebrow">RELATED PAPER</span><a href="{{ papers[topic.paper].url }}">{{ papers[topic.paper].title }} <span aria-hidden="true">↗</span></a><p>{{ papers[topic.paper].authors }}</p></div>
+  </div>
+  <aside class="notation-panel"><span class="eyebrow">{{ topic.notation_label }}</span><div class="notation">{{ topic.notation }}</div><p>{{ topic.note }}</p></aside>
+  {% if topic.key == 'circular-outcomes' %}{% include '_density_lab.html' %}{% endif %}
+</section>
+<section class="shell related-tutorial"><div><span class="eyebrow">{{ tutorial.implementation }} IMPLEMENTATION / TUTORIAL</span><h2>{{ tutorial.title }}</h2><p>{{ tutorial.summary }}</p><p>Follow the explanations, {{ tutorial.implementation }} code, and worked examples.</p></div><a class="button button-primary" href="{{ url('tutorials/' + tutorial.slug + '/') }}">Read the {{ tutorial.implementation }} tutorial <span aria-hidden="true">↗</span></a></section>
+{% endblock %}

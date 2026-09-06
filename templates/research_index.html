@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-heading shell">
+  <p class="eyebrow">RESEARCH / BAYESIAN DIRECTIONAL STATISTICS</p>
+  <h1>Research on<br><span>circular models.</span></h1>
+  <p class="page-lede">Priors that express directional variation, regression for angular responses, and joint circular models that connect direction with other quantities.</p>
+  <div class="page-marker"><span>PRIORS</span><span>CIRCULAR RESPONSE</span><span>CIRCULAR COVARIATE</span></div>
+</section>
+<section class="section shell" aria-labelledby="research-topics">
+  <div class="section-top"><div><p class="eyebrow">01 / RESEARCH TOPICS</p><h2 id="research-topics">Three connected questions.</h2></div></div>
+  <div class="research-grid">
+    {% for item in research %}
+    <a class="research-card" href="{{ url(item.key + '/') }}">
+      <div class="card-top"><span>0{{ loop.index }}</span><span aria-hidden="true">↗</span></div>
+      <div class="math-symbol">{{ item.symbol }}</div>
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.summary }}</p>
+      <span class="card-bottom">Explore the research <span aria-hidden="true">→</span></span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+<section class="section shell" aria-labelledby="research-papers">
+  <p class="eyebrow">02 / PAPERS</p>
+  <h2 id="research-papers">The research in detail.</h2>
+  {% for key, paper in papers.items() %}
+  <div class="paper-reference">
+    <span class="eyebrow">{{ 'CIRCULAR PRIORS' if key == 'priors' else 'CIRCULAR REGRESSION' }}</span>
+    <a href="{{ paper.url }}">{{ paper.title }} <span aria-hidden="true">↗</span></a>
+    <p>{{ paper.authors }}</p>
+  </div>
+  {% endfor %}
+</section>
+<section class="section shell" aria-labelledby="research-tutorials">
+  <div class="section-top"><div><p class="eyebrow">03 / Stan IMPLEMENTATIONS</p><h2 id="research-tutorials">From models to worked examples.</h2></div><a class="link-action" href="{{ url('tutorials/') }}">All three Stan tutorials <span aria-hidden="true">→</span></a></div>
+  {% include '_tutorial_list.html' %}
+</section>
+{% endblock %}

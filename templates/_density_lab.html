@@ -1,0 +1,50 @@
+<div class="density-lab" data-density-lab role="group" aria-label="Interactive circular distribution densities">
+  <script type="application/json" data-density-settings>{{ density_settings|tojson }}</script>
+  <div class="density-introduction"><p class="eyebrow">EXPLORE THE DISTRIBUTIONS</p><p>Move the sliders to see how the parameters change each density. In the circular view, zero density lies on the model circle and positive density extends outward. The curve below unwraps the same circle from −π to π.</p></div>
+  <div class="density-grid">
+    {% for panel in density_panels %}
+    <article class="density-card density-{{ panel.kind }}" data-density-card="{{ panel.kind }}" aria-labelledby="density-{{ panel.kind }}-heading">
+      <header class="density-card-heading"><div><p class="eyebrow">{{ 'CIRCULAR LOCATION' if panel.kind == 'vm' else 'LINEAR-SCALE LINK ADJUSTMENT' }}</p><h3 id="density-{{ panel.kind }}-heading">{{ panel.name }}</h3></div><span class="density-card-symbol" aria-hidden="true">{{ 'μ' if panel.kind == 'vm' else 'η' }}</span></header>
+      <fieldset class="density-controls" data-density-controls disabled>
+        <legend class="sr-only">Adjust {{ panel.name }} parameters</legend>
+        <label for="{{ panel.kind }}-location">{{ 'Mean direction · μ' if panel.kind == 'vm' else 'Link shift · η' }}<output id="{{ panel.kind }}-location-value" for="{{ panel.kind }}-location" data-density-location-output>{{ '0 rad' if panel.kind == 'vm' else '1.00' }}</output></label>
+        <input id="{{ panel.kind }}-location" data-density-location type="range" min="{{ density_settings.mu_min if panel.kind == 'vm' else -4 }}" max="{{ density_settings.mu_max if panel.kind == 'vm' else 4 }}" step="{{ 'any' if panel.kind == 'vm' else 0.05 }}" value="{{ 0 if panel.kind == 'vm' else 1 }}" aria-describedby="{{ panel.kind }}-parameter-note">
+        <div class="density-range-labels" aria-hidden="true"><span>{{ '−π' if panel.kind == 'vm' else '−4' }}</span><span>0</span><span>{{ 'π' if panel.kind == 'vm' else '4' }}</span></div>
+        <label for="{{ panel.kind }}-kappa">{{ 'Concentration · κ' if panel.kind == 'vm' else 'Base concentration · κ' }}<output for="{{ panel.kind }}-kappa" data-density-kappa-output>2.0</output></label>
+        <input id="{{ panel.kind }}-kappa" data-density-kappa type="range" min="0" max="{{ density_settings.kappa_max }}" step="{{ density_settings.kappa_step }}" value="2" aria-describedby="{{ panel.kind }}-parameter-note">
+        <div class="density-range-labels" aria-hidden="true"><span>0</span><span>{{ density_settings.kappa_max }}</span></div>
+        <button type="button" class="density-reset" data-density-reset>Reset parameters ↺</button>
+      </fieldset>
+      <p class="density-parameter-note" id="{{ panel.kind }}-parameter-note" data-density-note>{{ 'Changing μ rotates the density; changing κ adjusts its concentration.' if panel.kind == 'vm' else 'Changing η shifts and reshapes the density; η is not the mean direction.' }}</p>
+      <figure class="density-figure">
+        <div class="density-plot-label"><span>CIRCULAR VIEW</span><span>Outer ring: <b data-density-scale>{{ panel.scale }}</b> / rad</span></div>
+        <svg class="density-polar" viewBox="0 0 560 560" role="img" aria-labelledby="{{ panel.kind }}-polar-title {{ panel.kind }}-polar-desc">
+          <title id="{{ panel.kind }}-polar-title">{{ panel.name }} circular density</title>
+          <desc id="{{ panel.kind }}-polar-desc" data-density-description="polar">Density is zero on the model circle and increases outward. Zero radians is right, pi/2 top, plus or minus pi left, and minus pi/2 bottom. Kappa 2; {{ 'mu 0 radians' if panel.kind == 'vm' else 'eta 1' }}. Outer ring: {{ panel.scale }} per radian.</desc>
+          <g class="density-polar-grid" fill="none">{% for radius in [126.25, 157.5, 188.75, 220] %}<circle cx="280" cy="280" r="{{ radius }}"/>{% endfor %}{% for angle in range(0, 360, 45) %}<path d="M375 280H508" transform="rotate({{ angle }} 280 280)"/>{% endfor %}</g>
+          <g class="density-bearing-ticks">{% for angle in range(0, 360, 10) %}<path d="M280 {{ 42 if angle % 30 == 0 else 47 }}V52" transform="rotate({{ angle }} 280 280)"/>{% endfor %}</g>
+          <path class="density-polar-area" data-density-polar-area d="{{ panel.polar_area }}" fill-rule="evenodd"/>
+          <path class="density-polar-shape" data-density-polar d="{{ panel.polar }}"/>
+          <circle cx="280" cy="280" r="95" class="density-model-circle"/>
+          <g class="density-zero-label"><text x="280" y="275">MODEL CIRCLE</text><text x="280" y="298">0 density at the rim</text></g>
+          <g class="density-angle-labels"><text x="280" y="27">π/2</text><text x="534" y="286">0</text><text x="280" y="546">−π/2</text><text x="25" y="281">−π</text><text class="density-seam-label" x="25" y="303">(π)</text></g>
+        </svg>
+        <div class="density-plot-label density-linear-label"><span>THE SAME DENSITY, UNWRAPPED</span><span>Density / rad</span></div>
+        <svg class="density-linear" viewBox="0 0 560 185" role="img" aria-labelledby="{{ panel.kind }}-line-title {{ panel.kind }}-line-desc">
+          <title id="{{ panel.kind }}-line-title">{{ panel.name }} density from minus pi to pi radians</title>
+          <desc id="{{ panel.kind }}-line-desc" data-density-description="linear">The horizontal axis is angle in radians from minus pi to pi, and the vertical axis is density per radian. The endpoints are the same direction.</desc>
+          <g class="density-line-grid"><path d="M50 25H530M50 80H530M170 25V135M290 25V135M410 25V135"/></g>
+          <path class="density-line-area" data-density-area d="{{ panel.area }}"/>
+          <path class="density-axis" d="M50 20V135H535"/>
+          <path class="density-line-shape" data-density-line d="{{ panel.line }}"/>
+          <g class="density-line-labels"><text x="42" y="30" text-anchor="end" data-density-scale>{{ panel.scale }}</text><text x="42" y="140" text-anchor="end">0</text><text x="50" y="160">−π</text><text x="170" y="160">−π/2</text><text x="290" y="160">0</text><text x="410" y="160">π/2</text><text x="530" y="160">π</text></g>
+        </svg>
+        <figcaption>Distance outward from the model circle shows density, not counts. Each panel uses a smoothly changing density scale. The unwrapped endpoints −π and π are the same direction.</figcaption>
+      </figure>
+      <p class="sr-only" aria-live="polite" aria-atomic="true" data-density-status></p>
+    </article>
+    {% endfor %}
+  </div>
+  <div class="density-notes"><p><strong>A useful comparison.</strong> Set η to 0: LAvM becomes a von Mises distribution centred at 0, when κ matches. For von Mises, κ = 0 is uniform. For LAvM, κ = 0 need not be uniform when η ≠ 0.</p><p>All angles are in radians, increasing counterclockwise from 0 on the right. These are continuous densities, not the binned counts of a rose diagram.</p></div>
+  <noscript><p class="density-noscript">The plots above show the default parameters. Enable JavaScript to use the sliders.</p></noscript>
+</div>

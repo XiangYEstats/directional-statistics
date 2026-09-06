@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Directional Statistics · Xiang Ye</title>
+  <meta name="description" content="Directional statistics: an introduction, Bayesian research, and Stan tutorials by Xiang Ye.">
+  <meta name="theme-color" content="#f7f8f4">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Directional Statistics">
+  <meta property="og:description" content="Directional statistics: an introduction, Bayesian research, and Stan tutorials by Xiang Ye.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Directional Statistics">
+  <meta name="twitter:description" content="Directional statistics: an introduction, Bayesian research, and Stan tutorials by Xiang Ye.">
+  
+  
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/css/site.css?v=221605c9e951dcdc">
+  <script src="./assets/js/circular-math.js" defer></script>
+  <script src="./assets/js/site.js?v=3fc2d6eb18ee24a8" defer></script>
+  
+</head>
+<body class="page-home">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="./index.html" aria-label="Directional Statistics — home">
+        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="19"/><path d="M24 1V9M24 39V47M1 24H9M39 24H47"/><path class="brand-needle" d="M31 12L27 27L17 36L21 21Z"/><circle cx="24" cy="24" r="2"/></svg>
+        <span>Directional<br><strong>Statistics</strong></span>
+      </a>
+      <button class="mobile-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="./index.html" aria-current="page">Home</a>
+        <a href="./foundations/">Introduction</a>
+        <div class="nav-group">
+          <a href="./research/">Research</a>
+          <button class="nav-disclosure dropdown-arrow" aria-label="Show research topics" aria-expanded="false" aria-controls="research-menu"><span aria-hidden="true">⌄</span></button>
+          <div class="nav-panel" id="research-menu">
+            <a class="menu-all" href="./research/">Research overview <span aria-hidden="true">↗</span></a>
+            <a href="./priors/"><span class="menu-number">01</span>Priors</a><a href="./circular-outcomes/"><span class="menu-number">02</span>Regression: circular response</a><a href="./circular-predictors/"><span class="menu-number">03</span>Regression: circular covariate</a>
+          </div>
+        </div>
+        <div class="nav-group">
+          <a href="./tutorials/">Tutorials</a>
+          <button class="nav-disclosure dropdown-arrow" aria-label="Show the three tutorials" aria-expanded="false" aria-controls="tutorial-menu"><span aria-hidden="true">⌄</span></button>
+          <div class="nav-panel tutorial-menu" id="tutorial-menu">
+            <a class="menu-all" href="./tutorials/">All tutorials <span aria-hidden="true">↗</span></a>
+            <span class="menu-heading">Stan implementations</span>
+            <a href="./tutorials/pc-prior/"><span class="menu-number">01</span>PC priors for circular distributions</a><a href="./tutorials/lavm/"><span class="menu-number">02</span>Circular regression with LAvM</a><a href="./tutorials/circular-joint-regression/"><span class="menu-number">03</span>Joint circular models</a>
+          </div>
+        </div>
+        <a href="./software/">Package</a>
+        <a href="./contact/">Contact <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content" tabindex="-1">
+<section class="hero shell">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="tiny-bearing" aria-hidden="true">↗</span> XIANG YE / BAYESIAN RESEARCH</p>
+    <h1>Directional<br><span>Statistics.</span></h1>
+    <p class="hero-lede">When the data have <br>a sense of direction.</p>
+    <p class="hero-description">Angles on a circle. Directions on a sphere. Statistical methods that respect the geometry of the data.</p>
+    <div class="actions"><a class="button button-primary" href="./foundations/">Explore the introduction <span aria-hidden="true">↗</span></a><a class="link-action" href="./tutorials/">Read the tutorials <span aria-hidden="true">→</span></a></div>
+    <div class="hero-note"><span class="note-index">01 / THE CIRCLE</span><p>359° and 1° are only 2° apart.<br>The end of the scale meets the beginning.</p></div>
+  </div>
+  <div class="hero-figure"><figure class="rose-lab" data-rose-lab data-rose-settings='{"center": 67.5, "resultant": 0.65, "samples": {"balanced": [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8], "opposed": [3, 8, 19, 26, 19, 8, 3, 2, 3, 8, 19, 26, 19, 8, 3, 2]}, "size": 120}'>
+  <div class="plot-heading"><span><i class="status-dot" aria-hidden="true"></i> ANGULAR OBSERVATIONS</span><span>S¹ / 001</span></div>
+  <svg class="rose-plot" viewBox="0 0 560 560" role="img" aria-labelledby="rose-title rose-desc"><title id="rose-title">Rose diagram of illustrative directions</title><desc id="rose-desc">Sixteen equal angular bins. Sector area represents count. North is zero degrees; angles increase clockwise. An orange arrow shows the mean direction.</desc><g class="rose-grid"><circle cx="280" cy="280" r="95.000"/><circle cx="280" cy="280" r="134.350"/><circle cx="280" cy="280" r="164.545"/><circle cx="280" cy="280" r="190.000"/><path d="M280,280 L280.000,78.000"/><path d="M280,280 L422.836,137.164"/><path d="M280,280 L482.000,280.000"/><path d="M280,280 L422.836,422.836"/><path d="M280,280 L280.000,482.000"/><path d="M280,280 L137.164,422.836"/><path d="M280,280 L78.000,280.000"/><path d="M280,280 L137.164,137.164"/></g><g class="rose-ticks"><path d="M280.000,59.000 L280.000,47.000"/><path d="M299.697,54.860 L300.307,47.887"/><path d="M319.244,57.433 L320.460,50.540"/><path d="M338.493,61.701 L340.305,54.939"/><path d="M357.297,67.629 L359.691,61.052"/><path d="M375.512,75.174 L378.470,68.830"/><path d="M390.500,88.608 L396.500,78.216"/><path d="M409.628,94.872 L413.643,89.138"/><path d="M425.270,106.874 L429.770,101.512"/><path d="M439.806,120.194 L444.756,115.244"/><path d="M453.126,134.730 L458.488,130.230"/><path d="M465.128,150.372 L470.862,146.357"/><path d="M471.392,169.500 L481.784,163.500"/><path d="M484.826,184.488 L491.170,181.530"/><path d="M492.371,202.703 L498.948,200.309"/><path d="M498.299,221.507 L505.061,219.695"/><path d="M502.567,240.756 L509.460,239.540"/><path d="M505.140,260.303 L512.113,259.693"/><path d="M501.000,280.000 L513.000,280.000"/><path d="M505.140,299.697 L512.113,300.307"/><path d="M502.567,319.244 L509.460,320.460"/><path d="M498.299,338.493 L505.061,340.305"/><path d="M492.371,357.297 L498.948,359.691"/><path d="M484.826,375.512 L491.170,378.470"/><path d="M471.392,390.500 L481.784,396.500"/><path d="M465.128,409.628 L470.862,413.643"/><path d="M453.126,425.270 L458.488,429.770"/><path d="M439.806,439.806 L444.756,444.756"/><path d="M425.270,453.126 L429.770,458.488"/><path d="M409.628,465.128 L413.643,470.862"/><path d="M390.500,471.392 L396.500,481.784"/><path d="M375.512,484.826 L378.470,491.170"/><path d="M357.297,492.371 L359.691,498.948"/><path d="M338.493,498.299 L340.305,505.061"/><path d="M319.244,502.567 L320.460,509.460"/><path d="M299.697,505.140 L300.307,512.113"/><path d="M280.000,501.000 L280.000,513.000"/><path d="M260.303,505.140 L259.693,512.113"/><path d="M240.756,502.567 L239.540,509.460"/><path d="M221.507,498.299 L219.695,505.061"/><path d="M202.703,492.371 L200.309,498.948"/><path d="M184.488,484.826 L181.530,491.170"/><path d="M169.500,471.392 L163.500,481.784"/><path d="M150.372,465.128 L146.357,470.862"/><path d="M134.730,453.126 L130.230,458.488"/><path d="M120.194,439.806 L115.244,444.756"/><path d="M106.874,425.270 L101.512,429.770"/><path d="M94.872,409.628 L89.138,413.643"/><path d="M88.608,390.500 L78.216,396.500"/><path d="M75.174,375.512 L68.830,378.470"/><path d="M67.629,357.297 L61.052,359.691"/><path d="M61.701,338.493 L54.939,340.305"/><path d="M57.433,319.244 L50.540,320.460"/><path d="M54.860,299.697 L47.887,300.307"/><path d="M59.000,280.000 L47.000,280.000"/><path d="M54.860,260.303 L47.887,259.693"/><path d="M57.433,240.756 L50.540,239.540"/><path d="M61.701,221.507 L54.939,219.695"/><path d="M67.629,202.703 L61.052,200.309"/><path d="M75.174,184.488 L68.830,181.530"/><path d="M88.608,169.500 L78.216,163.500"/><path d="M94.872,150.372 L89.138,146.357"/><path d="M106.874,134.730 L101.512,130.230"/><path d="M120.194,120.194 L115.244,115.244"/><path d="M134.730,106.874 L130.230,101.512"/><path d="M150.372,94.872 L146.357,89.138"/><path d="M169.500,88.608 L163.500,78.216"/><path d="M184.488,75.174 L181.530,68.830"/><path d="M202.703,67.629 L200.309,61.052"/><path d="M221.507,61.701 L219.695,54.939"/><path d="M240.756,57.433 L239.540,50.540"/><path d="M260.303,54.860 L259.693,47.887"/></g><g data-sectors><path d="M280,280 L280.000,193.577 A86.423,86.423 0 0 1 313.073,200.155 Z"><title>0–22.5°: 6 observations</title></path><path d="M280,280 L328.682,162.472 A127.211,127.211 0 0 1 369.952,190.048 Z"><title>22.5–45°: 13 observations</title></path><path d="M280,280 L414.350,145.650 A190.000,190.000 0 0 1 455.537,207.290 Z"><title>45–67.5°: 29 observations</title></path><path d="M280,280 L455.537,207.290 A190.000,190.000 0 0 1 470.000,280.000 Z"><title>67.5–90°: 29 observations</title></path><path d="M280,280 L407.211,280.000 A127.211,127.211 0 0 1 397.528,328.682 Z"><title>90–112.5°: 13 observations</title></path><path d="M280,280 L359.845,313.073 A86.423,86.423 0 0 1 341.110,341.110 Z"><title>112.5–135°: 6 observations</title></path><path d="M280,280 L329.896,329.896 A70.564,70.564 0 0 1 307.004,345.193 Z"><title>135–157.5°: 4 observations</title></path><path d="M280,280 L303.386,336.459 A61.110,61.110 0 0 1 280.000,341.110 Z"><title>157.5–180°: 3 observations</title></path><path d="M280,280 L280.000,329.896 A49.896,49.896 0 0 1 260.905,326.098 Z"><title>180–202.5°: 2 observations</title></path><path d="M280,280 L266.498,312.596 A35.282,35.282 0 0 1 255.052,304.948 Z"><title>202.5–225°: 1 observations</title></path><path d="M280,280 L244.718,315.282 A49.896,49.896 0 0 1 233.902,299.095 Z"><title>225–247.5°: 2 observations</title></path><path d="M280,280 L233.902,299.095 A49.896,49.896 0 0 1 230.104,280.000 Z"><title>247.5–270°: 2 observations</title></path><path d="M280,280 L244.718,280.000 A35.282,35.282 0 0 1 247.404,266.498 Z"><title>270–292.5°: 1 observations</title></path><path d="M280,280 L233.902,260.905 A49.896,49.896 0 0 1 244.718,244.718 Z"><title>292.5–315°: 2 observations</title></path><path d="M280,280 L236.788,236.788 A61.110,61.110 0 0 1 256.614,223.541 Z"><title>315–337.5°: 3 observations</title></path><path d="M280,280 L252.996,214.807 A70.564,70.564 0 0 1 280.000,209.436 Z"><title>337.5–360°: 4 observations</title></path></g><g data-observations><circle cx="77.576" cy="335.898" r="1.7"/><circle cx="70.073" cy="285.544" r="1.7"/><circle cx="74.469" cy="236.908" r="1.7"/><circle cx="88.670" cy="193.439" r="1.7"/><circle cx="109.721" cy="157.098" r="1.7"/><circle cx="134.672" cy="128.409" r="1.7"/><circle cx="161.113" cy="106.894" r="1.7"/><circle cx="187.346" cy="91.545" r="1.7"/><circle cx="212.320" cy="81.205" r="1.7"/><circle cx="235.481" cy="74.773" r="1.7"/><circle cx="256.608" cy="71.307" r="1.7"/><circle cx="275.685" cy="70.044" r="1.7"/><circle cx="292.814" cy="70.391" r="1.7"/><circle cx="308.151" cy="71.895" r="1.7"/><circle cx="321.875" cy="74.217" r="1.7"/><circle cx="334.163" cy="77.105" r="1.7"/><circle cx="345.183" cy="80.373" r="1.7"/><circle cx="355.090" cy="83.884" r="1.7"/><circle cx="364.019" cy="87.540" r="1.7"/><circle cx="372.090" cy="91.269" r="1.7"/><circle cx="379.408" cy="95.019" r="1.7"/><circle cx="386.063" cy="98.753" r="1.7"/><circle cx="392.136" cy="102.445" r="1.7"/><circle cx="397.693" cy="106.079" r="1.7"/><circle cx="402.794" cy="109.642" r="1.7"/><circle cx="407.490" cy="113.128" r="1.7"/><circle cx="411.826" cy="116.531" r="1.7"/><circle cx="415.840" cy="119.852" r="1.7"/><circle cx="419.567" cy="123.089" r="1.7"/><circle cx="423.036" cy="126.244" r="1.7"/><circle cx="426.272" cy="129.320" r="1.7"/><circle cx="429.299" cy="132.319" r="1.7"/><circle cx="432.137" cy="135.244" r="1.7"/><circle cx="434.803" cy="138.098" r="1.7"/><circle cx="437.313" cy="140.886" r="1.7"/><circle cx="439.682" cy="143.612" r="1.7"/><circle cx="441.921" cy="146.277" r="1.7"/><circle cx="444.041" cy="148.887" r="1.7"/><circle cx="446.053" cy="151.445" r="1.7"/><circle cx="447.966" cy="153.955" r="1.7"/><circle cx="449.787" cy="156.419" r="1.7"/><circle cx="451.524" cy="158.841" r="1.7"/><circle cx="453.184" cy="161.225" r="1.7"/><circle cx="454.771" cy="163.573" r="1.7"/><circle cx="456.291" cy="165.889" r="1.7"/><circle cx="457.750" cy="168.175" r="1.7"/><circle cx="459.152" cy="170.434" r="1.7"/><circle cx="460.500" cy="172.669" r="1.7"/><circle cx="461.798" cy="174.883" r="1.7"/><circle cx="463.050" cy="177.079" r="1.7"/><circle cx="464.258" cy="179.258" r="1.7"/><circle cx="465.426" cy="181.424" r="1.7"/><circle cx="466.556" cy="183.579" r="1.7"/><circle cx="467.649" cy="185.725" r="1.7"/><circle cx="468.709" cy="187.865" r="1.7"/><circle cx="469.738" cy="190.002" r="1.7"/><circle cx="470.736" cy="192.137" r="1.7"/><circle cx="471.706" cy="194.274" r="1.7"/><circle cx="472.648" cy="196.414" r="1.7"/><circle cx="473.565" cy="198.560" r="1.7"/><circle cx="474.458" cy="200.715" r="1.7"/><circle cx="475.327" cy="202.881" r="1.7"/><circle cx="476.174" cy="205.061" r="1.7"/><circle cx="476.999" cy="207.258" r="1.7"/><circle cx="477.803" cy="209.474" r="1.7"/><circle cx="478.587" cy="211.711" r="1.7"/><circle cx="479.350" cy="213.974" r="1.7"/><circle cx="480.095" cy="216.265" r="1.7"/><circle cx="480.820" cy="218.588" r="1.7"/><circle cx="481.525" cy="220.945" r="1.7"/><circle cx="482.212" cy="223.340" r="1.7"/><circle cx="482.879" cy="225.778" r="1.7"/><circle cx="483.527" cy="228.262" r="1.7"/><circle cx="484.154" cy="230.795" r="1.7"/><circle cx="484.761" cy="233.384" r="1.7"/><circle cx="485.346" cy="236.032" r="1.7"/><circle cx="485.908" cy="238.745" r="1.7"/><circle cx="486.446" cy="241.527" r="1.7"/><circle cx="486.958" cy="244.386" r="1.7"/><circle cx="487.443" cy="247.327" r="1.7"/><circle cx="487.897" cy="250.357" r="1.7"/><circle cx="488.319" cy="253.484" r="1.7"/><circle cx="488.705" cy="256.716" r="1.7"/><circle cx="489.051" cy="260.061" r="1.7"/><circle cx="489.353" cy="263.529" r="1.7"/><circle cx="489.605" cy="267.131" r="1.7"/><circle cx="489.802" cy="270.878" r="1.7"/><circle cx="489.935" cy="274.781" r="1.7"/><circle cx="489.997" cy="278.856" r="1.7"/><circle cx="489.977" cy="283.117" r="1.7"/><circle cx="489.863" cy="287.580" r="1.7"/><circle cx="489.642" cy="292.264" r="1.7"/><circle cx="489.295" cy="297.188" r="1.7"/><circle cx="488.805" cy="302.375" r="1.7"/><circle cx="488.145" cy="307.848" r="1.7"/><circle cx="487.289" cy="313.633" r="1.7"/><circle cx="486.202" cy="319.759" r="1.7"/><circle cx="484.842" cy="326.258" r="1.7"/><circle cx="483.159" cy="333.163" r="1.7"/><circle cx="481.093" cy="340.510" r="1.7"/><circle cx="478.570" cy="348.336" r="1.7"/><circle cx="475.500" cy="356.680" r="1.7"/><circle cx="471.772" cy="365.578" r="1.7"/><circle cx="467.250" cy="375.066" r="1.7"/><circle cx="461.767" cy="385.170" r="1.7"/><circle cx="455.120" cy="395.900" r="1.7"/><circle cx="447.058" cy="407.246" r="1.7"/><circle cx="437.277" cy="419.155" r="1.7"/><circle cx="425.410" cy="431.512" r="1.7"/><circle cx="411.028" cy="444.109" r="1.7"/><circle cx="393.638" cy="456.597" r="1.7"/><circle cx="372.712" cy="468.426" r="1.7"/><circle cx="347.741" cy="478.774" r="1.7"/><circle cx="318.339" cy="486.471" r="1.7"/><circle cx="284.428" cy="489.953" r="1.7"/><circle cx="246.500" cy="487.311" r="1.7"/><circle cx="205.917" cy="476.499" r="1.7"/><circle cx="165.138" cy="455.803" r="1.7"/><circle cx="127.639" cy="424.521" r="1.7"/><circle cx="97.339" cy="383.609" r="1.7"/></g><g class="mean-arrow" data-mean-arrow transform="rotate(67.5000 280 280)"><path class="mean-halo" d="M280 294 L280 100 M280 90 L274 105 L286 105 Z"/><path d="M280 294 L280 100"/><path class="arrowhead" d="M280 90 L274 105 L286 105 Z"/></g><circle class="rose-origin" cx="280" cy="280" r="5"/><g class="rose-cardinals"><text x="280" y="25">N</text><text x="535" y="287">E</text><text x="280" y="546">S</text><text x="25" y="287">W</text></g><g class="rose-degrees"><text x="280" y="45">0° / 360°</text><text x="503" y="307">90°</text><text x="280" y="523">180°</text><text x="55" y="307">270°</text></g></svg>
+  <div class="plot-legend"><span><i class="legend-sector"></i> Frequency</span><span><i class="legend-mean"></i> Mean direction</span><span><i class="legend-dot"></i> Observations</span></div>
+  <div class="plot-stats" aria-live="polite" aria-atomic="true">
+    <div><span>Observations</span><strong data-stat-n>120</strong></div>
+    <div><span>Mean direction · μ</span><strong data-stat-mean>67.5°</strong></div>
+    <div><span>Resultant length · R̄</span><strong data-stat-r>0.65</strong></div>
+  </div>
+  <div class="plot-controls" hidden>
+    <label>Sample<select data-sample><option value="cluster">One main direction</option><option value="opposed">Two opposing directions</option><option value="balanced">Evenly spaced directions</option></select></label>
+    <label class="rotation-label">Rotate sample <output data-rotation-value>0°</output><input data-rotation type="range" min="0" max="360" step="5" value="0" aria-label="Rotate sample in degrees"></label>
+    <div class="concentration-control">
+      <label class="rotation-label">Concentration · R̄ <output data-concentration-value>0.65</output><input data-concentration type="range" min="0" max="1" step="0.01" value="0.65" aria-label="Concentration, target mean resultant length" aria-describedby="concentration-note" aria-valuetext="Mean resultant length 0.65"></label>
+      <div class="range-endpoints" aria-hidden="true"><span>0 · spread around the circle</span><span>1 · same direction</span></div>
+      <p id="concentration-note" data-concentration-note>Set the sample’s mean resultant length; the number of observations stays fixed.</p>
+    </div>
+  </div>
+  <figcaption>Illustrative data · 16 equal bins · sector area ∝ count<br>0° at north; angles increase clockwise.</figcaption>
+  <details class="plot-table"><summary>View the counts and scale</summary><p>Radius ∝ √count. Outer grid ring: <span data-max-count>29</span> observations. Inner rings: 25%, 50%, and 75% of that count. The count scale adapts to the largest bin. At R̄ = 1 the observation marks overlap.</p><table><caption>Counts in 22.5° angular bins</caption><thead><tr><th scope="col">Bearing</th><th scope="col">Count</th></tr></thead><tbody data-count-table><tr><th scope="row">0.0–22.5°</th><td>6</td></tr><tr><th scope="row">22.5–45.0°</th><td>13</td></tr><tr><th scope="row">45.0–67.5°</th><td>29</td></tr><tr><th scope="row">67.5–90.0°</th><td>29</td></tr><tr><th scope="row">90.0–112.5°</th><td>13</td></tr><tr><th scope="row">112.5–135.0°</th><td>6</td></tr><tr><th scope="row">135.0–157.5°</th><td>4</td></tr><tr><th scope="row">157.5–180.0°</th><td>3</td></tr><tr><th scope="row">180.0–202.5°</th><td>2</td></tr><tr><th scope="row">202.5–225.0°</th><td>1</td></tr><tr><th scope="row">225.0–247.5°</th><td>2</td></tr><tr><th scope="row">247.5–270.0°</th><td>2</td></tr><tr><th scope="row">270.0–292.5°</th><td>1</td></tr><tr><th scope="row">292.5–315.0°</th><td>2</td></tr><tr><th scope="row">315.0–337.5°</th><td>3</td></tr><tr><th scope="row">337.5–360.0°</th><td>4</td></tr></tbody></table></details>
+</figure></div>
+</section>
+<div class="application-strip"><div class="shell"><span>DIRECTIONAL DATA IN</span><p>Wind & weather</p><i>↗</i><p>Animal movement</p><i>↗</i><p>Geological orientation</p><i>↗</i><p>Time & phase</p></div></div>
+<section class="section shell intro-grid">
+  <div><p class="eyebrow">01 / UNDERSTAND THE GEOMETRY</p><h2>A circle has<br>no natural beginning.</h2></div>
+  <div class="section-copy"><p>Compass bearings and times of day wrap around. Averaging their numerical labels can be misleading: the arithmetic mean of 359° and 1° is 180°, while their circular mean is 0°.</p><p>A rose diagram makes the pattern visible by grouping observations into angular sectors. In the diagram above, larger sector areas mean more observations.</p><a class="link-action" href="./foundations/#rose-diagrams">How to read a rose diagram <span aria-hidden="true">→</span></a></div>
+</section>
+<div class="shell home-wrap"><figure class="wrap-comparison">
+  <div class="wrap-linear">
+    <p class="eyebrow">ON A STRAIGHT SCALE</p>
+    <h3>The numerical average is 180°.</h3>
+    <svg viewBox="0 0 500 145" class="wrap-line" role="img" aria-labelledby="line-mean-title line-mean-description">
+      <title id="line-mean-title">A linear scale puts 1° and 359° at opposite ends</title>
+      <desc id="line-mean-description">An observation at 1 degree lies near the left end, and an observation at 359 degrees near the right end. Their arithmetic mean is 180 degrees in the middle. This ignores that the endpoints meet on a circle.</desc>
+      <path class="wrap-grid" d="M42 68H458M42 61V75M458 61V75"/>
+      <path class="wrap-wrong" d="M250 38V84"/>
+      <g class="wrap-observation"><circle cx="43.156" cy="68" r="4"/><circle cx="456.844" cy="68" r="4"/></g>
+      <text class="wrap-label" x="43.156" y="44" text-anchor="middle">1°</text><text class="wrap-label" x="456.844" y="44" text-anchor="middle">359°</text>
+      <text class="wrap-wrong-label" x="250" y="107" text-anchor="middle">180° · arithmetic mean</text>
+      <text class="wrap-scale-note" x="42" y="107" text-anchor="middle">0°</text><text class="wrap-scale-note" x="458" y="107" text-anchor="middle">360°</text>
+    </svg>
+    <p class="wrap-equation">(359° + 1°) / 2 = <span>180°</span></p>
+    <p class="wrap-detail">The calculation is correct on a line, but its result points away from both observations.</p>
+  </div>
+  <div class="wrap-circular">
+    <p class="eyebrow">ON THE CIRCLE</p>
+    <h3>The mean direction is 0°.</h3>
+    <svg class="wrap-circle" viewBox="0 0 460 350" role="img" aria-labelledby="wrap-title wrap-description">
+      <title id="wrap-title">359° and 1° are neighbours on a circle</title>
+      <desc id="wrap-description">Two observations lie one degree either side of north. Their shortest separation is two degrees. Their circular mean is north, zero degrees. The arithmetic mean, 180 degrees, points south, opposite the observations. Labels use leader lines; angular positions are drawn to scale.</desc>
+      <g class="wrap-grid"><circle cx="230" cy="172" r="105"/><path d="M230 57V287M115 172H345"/></g>
+      <path class="wrap-vector" d="M230 172L228.1675 67.0160M230 172L231.8325 67.0160"/>
+      <path class="wrap-mean" d="M230 172V71M225 83L230 71L235 83"/>
+      <path class="wrap-wrong" d="M230 181V266M225 257L230 267L235 257"/>
+      <path class="wrap-short-arc" d="M228.1675 67.0160 A105 105 0 0 1 231.8325 67.0160"/>
+      <g class="wrap-observation"><circle cx="228.1675" cy="67.0160" r="1.4"/><circle cx="231.8325" cy="67.0160" r="1.4"/></g>
+      <g class="wrap-leaders"><path d="M228.1675 67.0160L183 44H129"/><path d="M231.8325 67.0160L277 44H330"/></g>
+      <g class="wrap-label"><text x="128" y="36" text-anchor="middle">359°</text><text x="332" y="36" text-anchor="middle">1°</text><text x="230" y="26" text-anchor="middle">N · 0°</text><text x="364" y="177">E</text><text x="86" y="177">W</text></g>
+      <circle class="wrap-center" cx="230" cy="172" r="3"/>
+      <text class="wrap-gap-label" x="248" y="110">2° apart</text>
+      <text class="wrap-wrong-label" x="230" y="310" text-anchor="middle">180° points the other way</text>
+      <text class="wrap-scale-note" x="230" y="335" text-anchor="middle">Angles drawn to scale</text>
+    </svg>
+  </div>
+  <figcaption>Same two observations, different geometry. Across north, 359° and 1° are separated by just 2°. The circular mean lies between them.</figcaption>
+</figure></div>
+<section class="research-section section" id="research"><div class="shell">
+  <div class="section-top"><div><p class="eyebrow">02 / BAYESIAN RESEARCH</p><h2>From directions to models.</h2></div><a class="link-action" href="./research/">Research overview <span aria-hidden="true">→</span></a></div>
+  <div class="research-grid"><a class="research-card" href="./priors/"><div class="card-top"><span>01</span><span aria-hidden="true">↗</span></div><div class="math-symbol">π(κ)</div><h3>Priors for circular models</h3><p>Penalized complexity priors for the concentration of circular distributions.</p><span class="card-bottom">Explore the research <span aria-hidden="true">→</span></span></a><a class="research-card" href="./circular-outcomes/"><div class="card-top"><span>02</span><span aria-hidden="true">↗</span></div><div class="math-symbol">Y ∈ S¹</div><h3>Regression with a circular response</h3><p>Link-adjusted von Mises models for angular outcomes and structured predictors.</p><span class="card-bottom">Explore the research <span aria-hidden="true">→</span></span></a><a class="research-card" href="./circular-predictors/"><div class="card-top"><span>03</span><span aria-hidden="true">↗</span></div><div class="math-symbol">(Y, θ)</div><h3>Regression with a circular covariate</h3><p>Joint circular models connecting direction and a linear response through shared latent structure.</p><span class="card-bottom">Explore the research <span aria-hidden="true">→</span></span></a></div>
+</div></section>
+<section class="section shell">
+  <div class="section-top"><div><p class="eyebrow">03 / STAN IMPLEMENTATIONS</p><h2>The methods, worked through in Stan.</h2></div><a class="link-action" href="./tutorials/">All three Stan tutorials <span aria-hidden="true">→</span></a></div>
+  <div class="tutorial-list"><a class="tutorial-row" href="./tutorials/pc-prior/"><span class="tutorial-number">01</span><div><span class="eyebrow">Priors / Stan IMPLEMENTATION</span><h3>Penalized Complexity Priors for Circular Distributions</h3><p>Construct and calibrate PC priors for von Mises concentration, with circular-uniform and point-mass base models.</p></div><span class="tutorial-arrow" aria-hidden="true">↗</span></a><a class="tutorial-row" href="./tutorials/lavm/"><span class="tutorial-number">02</span><div><span class="eyebrow">Circular response / Stan IMPLEMENTATION</span><h3>Circular Distributions for Regression Models</h3><p>Explore link-adjusted von Mises regression, from fixed effects to temporal structure and wind-direction data.</p></div><span class="tutorial-arrow" aria-hidden="true">↗</span></a><a class="tutorial-row" href="./tutorials/circular-joint-regression/"><span class="tutorial-number">03</span><div><span class="eyebrow">Circular covariate / Stan IMPLEMENTATION</span><h3>Joint circular models</h3><p>Explore regression models with circular covariates and learn how to extend them to joint modelling.</p></div><span class="tutorial-arrow" aria-hidden="true">↗</span></a></div>
+</section>
+</main>
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <div><a class="footer-title" href="./index.html">Directional Statistics <span aria-hidden="true">↗</span></a><p>Bayesian research & tutorials · Xiang Ye</p></div>
+      <div class="footer-links"><a href="./research/">Research</a><a href="./tutorials/">Tutorials</a><a href="https://xiangyestats.github.io/XiangYe/">Personal website ↗</a></div>
+      <span class="footer-coordinate">0° ≡ 360°</span>
+    </div>
+  </footer>
+</body>
+</html>

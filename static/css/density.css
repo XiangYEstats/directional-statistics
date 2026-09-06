@@ -1,0 +1,71 @@
+/* Distribution explorer. Inherits the website palette from site.css. */
+.density-lab { grid-column: 1 / -1; min-width: 0; }
+.density-introduction { max-width: 830px; margin-bottom: 32px; }
+.density-introduction .eyebrow { margin-bottom: 12px; }
+.density-introduction > p:last-child { color: var(--muted); font-size: 16px; }
+.density-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.density-card { --density-color: var(--blue); --density-wash: var(--blue-soft); min-width: 0; padding: 27px 29px 24px; border: 1px solid var(--line); border-top: 3px solid var(--density-color); border-radius: 10px; background: linear-gradient(150deg, var(--density-wash), var(--white) 38%); }
+.density-lavm { --density-color: var(--jade); --density-wash: var(--jade-soft); }
+.density-card-heading { display: flex; justify-content: space-between; gap: 20px; align-items: start; min-height: 101px; }
+.density-card-heading .eyebrow { color: var(--density-color); font-size: 10px; margin-bottom: 13px; }
+.density-card-heading h3 { font-size: 29px; line-height: 1.2; max-width: 335px; }
+.density-card-symbol { color: var(--density-color); font: italic 43px Georgia, serif; line-height: 1.2; }
+.density-controls { min-width: 0; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 22px 0 16px; margin: 19px 0 0; }
+.density-controls label { display: flex; justify-content: space-between; gap: 20px; color: var(--ink); font-size: 13px; }
+.density-controls output { font-family: var(--mono); color: var(--density-color); font-weight: 600; }
+.density-controls input { display: block; width: 100%; margin: 10px 0 0; height: 30px; accent-color: var(--density-color); cursor: pointer; }
+.density-controls input:disabled { cursor: not-allowed; }
+.density-range-labels { display: flex; justify-content: space-between; font: 10px/1.7 var(--mono); color: var(--muted); margin-bottom: 22px; }
+.density-reset { display: block; margin-left: auto; padding: 4px 0; color: var(--density-color); text-decoration: underline; text-underline-offset: 4px; font-size: 12px; }
+.density-reset:disabled { cursor: not-allowed; }
+.density-parameter-note { min-height: 65px; padding-top: 18px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.density-figure { margin-top: 20px; }
+.density-plot-label { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 14px; color: var(--muted); font: 10px/1.7 var(--mono); }
+.density-plot-label b { color: var(--ink); font-weight: 500; }
+.density-polar { display: block; width: min(100%, 420px); margin: 10px auto 18px; }
+.density-polar-grid { stroke: var(--plot-line); stroke-width: 1; }
+.density-bearing-ticks { stroke: var(--brass); stroke-width: 1; }
+.density-polar-area { fill: var(--density-color); fill-opacity: .13; stroke: none; }
+.density-polar-shape { fill: none; stroke: var(--density-color); stroke-width: 2.8; stroke-linejoin: round; }
+.density-model-circle { fill: none; stroke: var(--diagram-axis); stroke-width: 1.7; }
+.density-zero-label { text-anchor: middle; font: 13px var(--mono); fill: var(--muted); }
+.density-zero-label text:last-child { font-family: var(--sans); font-size: 14px; }
+.density-angle-labels { text-anchor: middle; font: 16px var(--mono); fill: var(--muted); }
+.density-seam-label { font-size: 12px; }
+.density-linear-label { border-top: 1px solid var(--line); padding-top: 20px; }
+.density-linear { display: block; width: 100%; margin-top: 12px; overflow: visible; }
+.density-line-grid { stroke: var(--line); stroke-width: 1; fill: none; }
+.density-line-area { fill: var(--density-color); fill-opacity: .10; }
+.density-axis { stroke: var(--diagram-axis); stroke-width: 1.2; fill: none; }
+.density-line-shape { stroke: var(--density-color); stroke-width: 2.5; fill: none; stroke-linejoin: round; }
+.density-line-labels { fill: var(--muted); text-anchor: middle; font: 15px var(--mono); }
+.density-line-labels [text-anchor="end"] { text-anchor: end; }
+.density-figure figcaption { color: var(--muted); font-size: 12px; line-height: 1.8; margin-top: 8px; }
+.density-notes { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; margin-top: 28px; padding: 23px 0 0; color: var(--muted); font-size: 13px; }
+.density-notes p + p { margin-top: 0; }
+.density-notes strong { color: var(--ink); font-weight: 550; }
+.density-noscript { padding: 16px; margin-top: 20px; border: 1px solid var(--line); background: var(--surface); }
+@media (max-width: 1000px) {
+  .density-card { padding: 23px 20px; }
+  .density-card-heading h3 { font-size: 25px; }
+  .density-card-heading { min-height: 115px; }
+  .density-grid { gap: 20px; }
+  .density-parameter-note { min-height: 88px; }
+  .density-line-labels { font-size: 18px; }
+}
+@media (max-width: 760px) {
+  .density-grid { grid-template-columns: 1fr; gap: 26px; }
+  .density-card { padding: 25px 24px; }
+  .density-card-heading { min-height: 0; }
+  .density-card-heading h3 { font-size: 28px; }
+  .density-parameter-note { min-height: 65px; }
+  .density-notes { grid-template-columns: 1fr; gap: 14px; }
+}
+@media (max-width: 420px) {
+  .density-card { padding: 21px 16px; }
+  .density-card-heading h3 { font-size: 25px; }
+  .density-card-symbol { font-size: 35px; }
+  .density-angle-labels { font-size: 20px; }
+  .density-line-labels { font-size: 22px; }
+  .density-plot-label { font-size: 9px; }
+}

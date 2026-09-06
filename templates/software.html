@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-heading shell"><p class="eyebrow">PACKAGE / R / MIT LICENSE</p><h1>INLA<span>circular</span></h1><p class="page-lede">Bayesian circular regression and joint circular models using Integrated Nested Laplace Approximation (INLA).</p><div class="actions"><a class="button button-primary" href="{{ site.package_repo }}">View INLAcircular on GitHub <span aria-hidden="true">↗</span></a><a class="link-action" href="#installation">Installation ↓</a><a class="link-action" href="#documentation">Documentation ↓</a></div></section>
+<section class="section shell package-overview"><div><p class="eyebrow">01 / THE PACKAGE</p><h2>Circular models.<br>Bayesian computation.</h2></div><div><p>INLAcircular brings together circular distributions, penalized complexity priors, and tools for fitting circular regression and joint circular models.</p><p>The distribution and PC-prior functions work without INLA. For model fitting, install INLA separately; the package uses its namespace directly.</p><div class="package-tags"><span>Circular distributions</span><span>PC priors</span><span>Regression</span></div></div></section>
+<section class="package-install" id="installation"><div class="shell section"><p class="eyebrow">02 / GET STARTED</p><h2>Install from GitHub.</h2><div class="install-grid">
+  <div><h3>1. Install INLAcircular</h3><p>Install <code>remotes</code> if needed, then install the development version from the package repository.</p><div class="code-panel"><div class="code-label">R / DEVELOPMENT INSTALLATION</div><pre><code>install.packages("remotes")
+remotes::install_github(
+  "XiangYEstats/INLAcircular"
+)
+
+library(INLAcircular)</code></pre></div></div>
+  <div><h3>2. Add INLA for model fitting</h3><p>Model fitting requires <strong>INLA ≥ 25.08.21</strong>. It is optional and not installed automatically. Use the stable INLA repository:</p><div class="code-panel"><div class="code-label">R / OPTIONAL MODEL-FITTING DEPENDENCY</div><pre><code>install.packages(
+  "INLA",
+  repos = c(
+    getOption("repos"),
+    INLA = "https://inla.r-inla-download.org/R/stable"
+  )
+)</code></pre></div></div>
+</div><p class="installation-note">You do not need to attach INLA to use the package. If you attach both packages and want the compatibility <code>inla()</code> function on the search path, load <code>library(INLA)</code> before <code>library(INLAcircular)</code>.</p></div></section>
+<section class="section shell package-documentation" id="documentation"><div><p class="eyebrow">03 / DOCUMENTATION</p><h2>Find the details<br>when you need them.</h2><p>The package guide covers circular distributions, PC-prior functions, model specification, direct fitting with <code>INLA::inla()</code>, and <code>inlacc()</code>.</p><a class="link-action" href="{{ site.package_repo }}">Full documentation & source on GitHub <span aria-hidden="true">↗</span></a></div><div><div class="code-panel"><div class="code-label">R / FUNCTION DOCUMENTATION</div><pre><code>help(package = "INLAcircular")
+?inlacc</code></pre></div><p>If your installation includes the vignette, open the comprehensive guide with:</p><div class="code-panel"><div class="code-label">R / PACKAGE GUIDE</div><pre><code>vignette(
+  "INLAcircular-guide",
+  package = "INLAcircular"
+)</code></pre></div><p class="small-note">For a GitHub installation, building the vignette requires <code>build_vignettes = TRUE</code> in the <code>remotes::install_github()</code> call and the guide’s build dependencies. See the <a href="https://remotes.r-lib.org/reference/install_github.html">remotes installation options</a> and the package repository for the complete setup.</p></div></section>
+<section class="shell related-tutorial"><div><span class="eyebrow">RESEARCH TUTORIALS / Stan IMPLEMENTATIONS</span><h2>Priors, regression & joint circular models.</h2><p>The three research tutorials explain the methods with Stan implementations and worked examples.</p></div><a class="button button-primary" href="{{ url('tutorials/') }}">Explore the Stan tutorials <span aria-hidden="true">↗</span></a></section>
+{% endblock %}

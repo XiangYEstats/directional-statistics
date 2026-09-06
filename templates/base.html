@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}{% if active != 'home' %} | Directional Statistics{% endif %} · Xiang Ye</title>
+  <meta name="description" content="{{ description }}">
+  <meta name="theme-color" content="#f7f8f4">
+  <meta property="og:type" content="{{ 'article' if active == 'tutorials' and route != 'tutorials/' else 'website' }}">
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta name="twitter:card" content="{{ 'summary_large_image' if canonical and active == 'home' else 'summary' }}">
+  <meta name="twitter:title" content="{{ title }}">
+  <meta name="twitter:description" content="{{ description }}">
+  {% if canonical %}<link rel="canonical" href="{{ canonical }}"><meta property="og:url" content="{{ canonical }}">{% endif %}
+  {% if canonical and active == 'home' %}
+  <meta property="og:image" content="{{ site.url.rstrip('/') }}/assets/og.png">
+  <meta property="og:image:width" content="1731">
+  <meta property="og:image:height" content="909">
+  <meta property="og:image:alt" content="Directional Statistics — Bayesian research & tutorials, Xiang Ye">
+  <meta name="twitter:image" content="{{ site.url.rstrip('/') }}/assets/og.png">
+  {% endif %}
+  <link rel="icon" href="{{ url('assets/favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url('assets/css/site.css') }}?v={{ asset_versions['css/site.css'] }}">
+  {% if active in ['home', 'foundations'] %}<script src="{{ url('assets/js/circular-math.js') }}" defer></script>{% endif %}
+  <script src="{{ url('assets/js/site.js') }}?v={{ asset_versions['js/site.js'] }}" defer></script>
+  {% if active == 'circular-outcomes' %}<link rel="stylesheet" href="{{ url('assets/css/density.css') }}?v={{ asset_versions['css/density.css'] }}"><script src="{{ url('assets/js/density-math.js') }}?v={{ asset_versions['js/density-math.js'] }}" defer></script><script src="{{ url('assets/js/density-plots.js') }}?v={{ asset_versions['js/density-plots.js'] }}" defer></script>{% endif %}
+</head>
+<body class="page-{{ active }}{% if active == 'tutorials' and route != 'tutorials/' %} page-reader{% endif %}">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="{{ url('index.html') }}" aria-label="Directional Statistics — home">
+        <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="19"/><path d="M24 1V9M24 39V47M1 24H9M39 24H47"/><path class="brand-needle" d="M31 12L27 27L17 36L21 21Z"/><circle cx="24" cy="24" r="2"/></svg>
+        <span>Directional<br><strong>Statistics</strong></span>
+      </a>
+      <button class="mobile-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu <span aria-hidden="true">☰</span></button>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="{{ url('index.html') }}"{% if active == 'home' %} aria-current="page"{% endif %}>Home</a>
+        <a href="{{ url('foundations/') }}"{% if active == 'foundations' %} aria-current="page"{% endif %}>Introduction</a>
+        <div class="nav-group">
+          <a href="{{ url('research/') }}"{% if active in ['research', 'priors', 'circular-outcomes', 'circular-predictors'] %} aria-current="{{ 'page' if active == 'research' else 'true' }}"{% endif %}>Research</a>
+          <button class="nav-disclosure dropdown-arrow" aria-label="Show research topics" aria-expanded="false" aria-controls="research-menu"><span aria-hidden="true">⌄</span></button>
+          <div class="nav-panel" id="research-menu">
+            <a class="menu-all" href="{{ url('research/') }}">Research overview <span aria-hidden="true">↗</span></a>
+            {% for item in research %}<a href="{{ url(item.key + '/') }}"{% if active == item.key %} aria-current="page"{% endif %}><span class="menu-number">0{{ loop.index }}</span>{{ item.label }}</a>{% endfor %}
+          </div>
+        </div>
+        <div class="nav-group">
+          <a href="{{ url('tutorials/') }}"{% if active == 'tutorials' %} aria-current="{{ 'page' if route == 'tutorials/' else 'true' }}"{% endif %}>Tutorials</a>
+          <button class="nav-disclosure dropdown-arrow" aria-label="Show the three tutorials" aria-expanded="false" aria-controls="tutorial-menu"><span aria-hidden="true">⌄</span></button>
+          <div class="nav-panel tutorial-menu" id="tutorial-menu">
+            <a class="menu-all" href="{{ url('tutorials/') }}">All tutorials <span aria-hidden="true">↗</span></a>
+            <span class="menu-heading">Stan implementations</span>
+            {% for item in tutorials %}<a href="{{ url('tutorials/' + item.slug + '/') }}"{% if route == 'tutorials/' + item.slug + '/' %} aria-current="page"{% endif %}><span class="menu-number">0{{ loop.index }}</span>{{ item.menu_title }}</a>{% endfor %}
+          </div>
+        </div>
+        <a href="{{ url('software/') }}"{% if active == 'software' %} aria-current="page"{% endif %}>Package</a>
+        <a href="{{ url('contact/') }}"{% if active == 'contact' %} aria-current="page"{% endif %}>Contact <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content" tabindex="-1">{% block content %}{% endblock %}</main>
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <div><a class="footer-title" href="{{ url('index.html') }}">Directional Statistics <span aria-hidden="true">↗</span></a><p>Bayesian research & tutorials · Xiang Ye</p></div>
+      <div class="footer-links"><a href="{{ url('research/') }}">Research</a><a href="{{ url('tutorials/') }}">Tutorials</a><a href="{{ site.personal_site }}">Personal website ↗</a></div>
+      <span class="footer-coordinate">0° ≡ 360°</span>
+    </div>
+  </footer>
+</body>
+</html>

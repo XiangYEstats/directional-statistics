@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero shell">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="tiny-bearing" aria-hidden="true">↗</span> XIANG YE / BAYESIAN RESEARCH</p>
+    <h1>Directional<br><span>Statistics.</span></h1>
+    <p class="hero-lede">When the data have <br>a sense of direction.</p>
+    <p class="hero-description">Angles on a circle. Directions on a sphere. Statistical methods that respect the geometry of the data.</p>
+    <div class="actions"><a class="button button-primary" href="{{ url('foundations/') }}">Explore the introduction <span aria-hidden="true">↗</span></a><a class="link-action" href="{{ url('tutorials/') }}">Read the tutorials <span aria-hidden="true">→</span></a></div>
+    <div class="hero-note"><span class="note-index">01 / THE CIRCLE</span><p>359° and 1° are only 2° apart.<br>The end of the scale meets the beginning.</p></div>
+  </div>
+  <div class="hero-figure">{% include '_rose.html' %}</div>
+</section>
+<div class="application-strip"><div class="shell"><span>DIRECTIONAL DATA IN</span><p>Wind & weather</p><i>↗</i><p>Animal movement</p><i>↗</i><p>Geological orientation</p><i>↗</i><p>Time & phase</p></div></div>
+<section class="section shell intro-grid">
+  <div><p class="eyebrow">01 / UNDERSTAND THE GEOMETRY</p><h2>A circle has<br>no natural beginning.</h2></div>
+  <div class="section-copy"><p>Compass bearings and times of day wrap around. Averaging their numerical labels can be misleading: the arithmetic mean of 359° and 1° is 180°, while their circular mean is 0°.</p><p>A rose diagram makes the pattern visible by grouping observations into angular sectors. In the diagram above, larger sector areas mean more observations.</p><a class="link-action" href="{{ url('foundations/#rose-diagrams') }}">How to read a rose diagram <span aria-hidden="true">→</span></a></div>
+</section>
+<div class="shell home-wrap">{% include '_wrap_comparison.html' %}</div>
+<section class="research-section section" id="research"><div class="shell">
+  <div class="section-top"><div><p class="eyebrow">02 / BAYESIAN RESEARCH</p><h2>From directions to models.</h2></div><a class="link-action" href="{{ url('research/') }}">Research overview <span aria-hidden="true">→</span></a></div>
+  <div class="research-grid">{% for item in research %}<a class="research-card" href="{{ url(item.key + '/') }}"><div class="card-top"><span>0{{ loop.index }}</span><span aria-hidden="true">↗</span></div><div class="math-symbol">{{ item.symbol }}</div><h3>{{ item.title }}</h3><p>{{ item.summary }}</p><span class="card-bottom">Explore the research <span aria-hidden="true">→</span></span></a>{% endfor %}</div>
+</div></section>
+<section class="section shell">
+  <div class="section-top"><div><p class="eyebrow">03 / STAN IMPLEMENTATIONS</p><h2>The methods, worked through in Stan.</h2></div><a class="link-action" href="{{ url('tutorials/') }}">All three Stan tutorials <span aria-hidden="true">→</span></a></div>
+  {% include '_tutorial_list.html' %}
+</section>
+{% endblock %}

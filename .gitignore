@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+.build-*/
+.docs-previous/
+# Generated docs/ is intentionally committed for GitHub Pages.

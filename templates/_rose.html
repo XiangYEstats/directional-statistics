@@ -1,0 +1,21 @@
+<figure class="rose-lab" data-rose-lab data-rose-settings='{{ rose_settings|tojson }}'>
+  <div class="plot-heading"><span><i class="status-dot" aria-hidden="true"></i> ANGULAR OBSERVATIONS</span><span>S¹ / 001</span></div>
+  {{ rose_svg }}
+  <div class="plot-legend"><span><i class="legend-sector"></i> Frequency</span><span><i class="legend-mean"></i> Mean direction</span><span><i class="legend-dot"></i> Observations</span></div>
+  <div class="plot-stats" aria-live="polite" aria-atomic="true">
+    <div><span>Observations</span><strong data-stat-n>{{ rose_stats.n }}</strong></div>
+    <div><span>Mean direction · μ</span><strong data-stat-mean>{{ '%.1f'|format(rose_stats.mean) }}°</strong></div>
+    <div><span>Resultant length · R̄</span><strong data-stat-r>{{ '%.2f'|format(rose_stats.resultant) }}</strong></div>
+  </div>
+  <div class="plot-controls" hidden>
+    <label>Sample<select data-sample><option value="cluster">One main direction</option><option value="opposed">Two opposing directions</option><option value="balanced">Evenly spaced directions</option></select></label>
+    <label class="rotation-label">Rotate sample <output data-rotation-value>0°</output><input data-rotation type="range" min="0" max="360" step="5" value="0" aria-label="Rotate sample in degrees"></label>
+    <div class="concentration-control">
+      <label class="rotation-label">Concentration · R̄ <output data-concentration-value>{{ '%.2f'|format(rose_settings.resultant) }}</output><input data-concentration type="range" min="0" max="1" step="0.01" value="{{ rose_settings.resultant }}" aria-label="Concentration, target mean resultant length" aria-describedby="concentration-note" aria-valuetext="Mean resultant length {{ rose_settings.resultant }}"></label>
+      <div class="range-endpoints" aria-hidden="true"><span>0 · spread around the circle</span><span>1 · same direction</span></div>
+      <p id="concentration-note" data-concentration-note>Set the sample’s mean resultant length; the number of observations stays fixed.</p>
+    </div>
+  </div>
+  <figcaption>Illustrative data · 16 equal bins · sector area ∝ count<br>0° at north; angles increase clockwise.</figcaption>
+  <details class="plot-table"><summary>View the counts and scale</summary><p>Radius ∝ √count. Outer grid ring: <span data-max-count>{{ rose_counts|max }}</span> observations. Inner rings: 25%, 50%, and 75% of that count. The count scale adapts to the largest bin. At R̄ = 1 the observation marks overlap.</p><table><caption>Counts in 22.5° angular bins</caption><thead><tr><th scope="col">Bearing</th><th scope="col">Count</th></tr></thead><tbody data-count-table>{% for count in rose_counts %}<tr><th scope="row">{{ (loop.index0 * 22.5)|round(1) }}–{{ (loop.index * 22.5)|round(1) }}°</th><td>{{ count }}</td></tr>{% endfor %}</tbody></table></details>
+</figure>

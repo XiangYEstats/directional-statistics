@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+{% set document_url = url('assets/tutorials/' + tutorial.slug + '/' + tutorial.filename) + '?v=' + tutorial_versions[tutorial.slug] %}
+<section class="shell reader-heading"><a class="back-link" href="{{ url('tutorials/') }}">← All Stan tutorials</a><p class="eyebrow">{{ tutorial.category }} / {{ tutorial.implementation }} IMPLEMENTATION</p><h1>{{ tutorial.title }}</h1><p>{{ tutorial.summary }}</p><div class="document-meta"><span>Xiang Ye</span><span>{{ tutorial.implementation }} tutorial</span><span>Document dated <time datetime="{{ tutorial.date }}">{{ tutorial.display_date }}</time></span></div>
+  <div class="reader-actions"><a class="button button-primary" href="{{ document_url }}" target="_blank" rel="noopener">Open full document <span aria-hidden="true">↗</span><span class="sr-only"> (new tab)</span></a><a href="{{ document_url }}" download>Download HTML ↓</a>{% for file in tutorial.data_files %}<a href="{{ url('assets/tutorials/' + tutorial.slug + '/' + file) }}" download>Download wind data ↓</a>{% endfor %}</div>
+</section>
+<div class="document-shell shell"><div class="document-bar"><span>{{ tutorial.implementation }} TUTORIAL</span><span>MathJax equations require internet access</span></div><iframe class="tutorial-document" src="{{ document_url }}" title="{{ tutorial.title }} — full {{ tutorial.implementation }} tutorial by Xiang Ye" height="1000" data-tutorial-frame></iframe></div>
+<div class="reader-end shell"><a class="link-action" href="{{ url('tutorials/') }}">← Back to the three Stan tutorials</a><a class="link-action" href="#main-content">Back to top ↑</a></div>
+{% endblock %}

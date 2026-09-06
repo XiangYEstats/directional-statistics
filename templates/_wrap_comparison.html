@@ -1,0 +1,24 @@
+<figure class="wrap-comparison">
+  <div class="wrap-linear">
+    <p class="eyebrow">ON A STRAIGHT SCALE</p>
+    <h3>The numerical average is 180°.</h3>
+    <svg viewBox="0 0 500 145" class="wrap-line" role="img" aria-labelledby="line-mean-title line-mean-description">
+      <title id="line-mean-title">A linear scale puts 1° and 359° at opposite ends</title>
+      <desc id="line-mean-description">An observation at 1 degree lies near the left end, and an observation at 359 degrees near the right end. Their arithmetic mean is 180 degrees in the middle. This ignores that the endpoints meet on a circle.</desc>
+      <path class="wrap-grid" d="M42 68H458M42 61V75M458 61V75"/>
+      <path class="wrap-wrong" d="M250 38V84"/>
+      <g class="wrap-observation"><circle cx="43.156" cy="68" r="4"/><circle cx="456.844" cy="68" r="4"/></g>
+      <text class="wrap-label" x="43.156" y="44" text-anchor="middle">1°</text><text class="wrap-label" x="456.844" y="44" text-anchor="middle">359°</text>
+      <text class="wrap-wrong-label" x="250" y="107" text-anchor="middle">180° · arithmetic mean</text>
+      <text class="wrap-scale-note" x="42" y="107" text-anchor="middle">0°</text><text class="wrap-scale-note" x="458" y="107" text-anchor="middle">360°</text>
+    </svg>
+    <p class="wrap-equation">(359° + 1°) / 2 = <span>180°</span></p>
+    <p class="wrap-detail">The calculation is correct on a line, but its result points away from both observations.</p>
+  </div>
+  <div class="wrap-circular">
+    <p class="eyebrow">ON THE CIRCLE</p>
+    <h3>The mean direction is 0°.</h3>
+    {{ wrap_comparison_svg }}
+  </div>
+  <figcaption>Same two observations, different geometry. Across north, 359° and 1° are separated by just 2°. The circular mean lies between them.</figcaption>
+</figure>

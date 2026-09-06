@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-heading shell"><p class="eyebrow">INTRODUCTION / THE GEOMETRY OF DATA</p><h1>What is<br><span>directional statistics?</span></h1><p class="page-lede">The statistics of angles, directions, and orientations. The sample space might be a circle, a sphere, or a related geometric space.</p><nav class="anchor-nav" aria-label="On this page"><a href="#sample-spaces">Sample spaces ↓</a><a href="#circular-mean">Circular mean ↓</a><a href="#rose-diagrams">Rose diagrams ↓</a></nav></section>
+<section class="section shell" id="sample-spaces"><div class="section-top"><div><p class="eyebrow">01 / SAMPLE SPACES</p><h2>Start with where the data live.</h2></div></div>
+  <div class="space-grid">
+    <article>{{ geometry('circle') }}<span class="space-symbol">S¹</span><h3>The circle</h3><p>Compass bearings, time of day, and phase repeat after one full turn. 0° and 360° describe the same point.</p></article>
+    <article>{{ geometry('sphere') }}<span class="space-symbol">S², Sᵖ⁻¹</span><h3>Spheres & hyperspheres</h3><p>Unit vectors describe directions in three or more dimensions. Their values lie on a sphere or hypersphere.</p></article>
+    <article>{{ geometry('axes') }}<span class="space-symbol">x ≡ −x</span><h3>Unoriented axes</h3><p>A line without an arrow is unchanged when reversed. For axial data, opposite directions represent the same observation.</p></article>
+    <article>{{ geometry('manifold') }}<span class="space-symbol">ℳ</span><h3>Other manifolds</h3><p>Rotations and shapes lead to other geometric spaces. This connects directional statistics to the wider study of data on manifolds.</p></article>
+  </div>
+</section>
+<section class="mean-section" id="circular-mean"><div class="shell section intro-grid">
+  <div><p class="eyebrow">02 / CIRCULAR SUMMARIES</p><h2>Average the vectors,<br>not the angle labels.</h2><p>359° and 1° have a circular mean of 0°. Working with unit vectors keeps nearby directions together, even when their labels lie on opposite sides of the scale.</p></div>
+  <div class="mean-formulas"><div><span>Mean cosine & sine</span><p>C̄ = n⁻¹ Σ cos θᵢ<br>S̄ = n⁻¹ Σ sin θᵢ</p></div><div><span>Mean direction</span><p>μ̂ = atan2(S̄, C̄)</p></div><div><span>Mean resultant length</span><p>R̄ = √(C̄² + S̄²)</p></div><p class="formula-note">R̄ lies between 0 and 1. A value near 1 indicates strong alignment. At R̄ = 0, the mean direction is undefined; opposing clusters can cancel, so a small R̄ does not by itself imply uniformity. Express μ̂ in the chosen angular range.</p></div>
+</div><div class="shell mean-comparison">{% include '_wrap_comparison.html' %}</div></section>
+<section class="section shell rose-section" id="rose-diagrams">
+  <div class="rose-explanation"><p class="eyebrow">03 / SEE THE DISTRIBUTION</p><h2>Meet the<br>rose diagram.</h2><p class="large-copy">A histogram, arranged around a circle.</p><p>Divide the circle into angular bins, then count the observations in each bin. Each sector shows the frequency of directions in that range.</p>
+    <ol class="explanation-steps"><li><span>Read the bearing.</span> Here, north is 0° and angles increase clockwise. Mathematical plots may use a different convention.</li><li><span>Compare the sectors.</span> These bins are equally wide. Sector <strong>area</strong> represents count, so radius grows with √count. Some plots use radius directly; always check the scale.</li><li><span>Look beyond the mean.</span> Several clusters can be hidden by a single average. Try the two opposing directions to see why.</li></ol>
+    <p class="small-note">For the single-direction sample, use the concentration slider to set the mean resultant length R̄ from 0 to 1. Rotation changes its direction without changing R̄. The opposing and evenly spaced examples keep R̄ = 0 to illustrate cancellation.</p>
+    <p class="small-note">The samples are illustrative, not research observations. Changing the bin width or origin can change a rose diagram’s appearance.</p>
+  </div>
+  {% include '_rose.html' %}
+</section>
+<section class="references shell"><p class="eyebrow">READING & DEFINITIONS</p><p>Rose-diagram construction and scaling: <a href="https://search.r-project.org/CRAN/refmans/circular/html/rose.diag.html">R circular: rose.diag ↗</a>. Compass and mathematical conventions: <a href="https://search.r-project.org/CRAN/refmans/spatstat.explore/html/rose.html">R spatstat: rose ↗</a>. Circular-mean definition: <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.circmean.html">SciPy: circmean ↗</a>.</p></section>
+{% endblock %}
