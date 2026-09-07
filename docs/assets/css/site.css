@@ -1,9 +1,5 @@
-/* DIRECTIONAL STATISTICS · THEME & LAYOUT
-   Start here when changing the theme. :root contains the shared palette and
-   fonts, followed by shared styles, diagrams, pages, and responsive rules.
-   Porcelain light, enamel blue, turquoise, coral and fine brass accents.
-   Compass and astronomical-instrument geometry; English-only typography.
-   Tutorial HTML is independent; its embedded styles do not inherit this file. */
+/* Shared palette and fonts in :root, followed by layout, diagrams, pages,
+   and responsive rules. Embedded tutorials use their own stylesheets. */
 :root {
   --navy: #244769;
   --ink: #294255;
@@ -99,7 +95,7 @@ html:not(.js) .nav-group:hover .nav-panel, html:not(.js) .nav-group:focus-within
 .hero-note { display: flex; gap: 23px; border-top: 1px solid var(--line); margin-top: 38px; padding-top: 23px; align-items: baseline; }
 .note-index { color: var(--blue); font-family: var(--mono); font-size: 9px; letter-spacing: .04em; white-space: nowrap; }
 .hero-note p { color: var(--muted); font-size: 12px; line-height: 1.7; }
-/* The central visual is a real equal-area polar histogram, not ornament. */
+/* Equal-area polar histogram. */
 .hero-figure { min-width: 0; }
 .rose-lab { background: radial-gradient(ellipse at 18% 4%, #e2eefb, transparent 52%), radial-gradient(ellipse at 92% 34%, #e1f3eb, transparent 52%), var(--plot); color: var(--ink); padding: 24px 27px 20px; border: 1px solid #c2dbe1; border-top: 3px solid var(--cyan); border-radius: 10px; box-shadow: 0 18px 48px #326d7f0d; }
 .plot-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; font: 10px/1.7 var(--mono); letter-spacing: .065em; color: var(--muted); }
@@ -190,7 +186,7 @@ html:not(.js) .nav-group:hover .nav-panel, html:not(.js) .nav-group:focus-within
 .footer-links a { text-decoration: none; }
 .footer-links a:hover { text-decoration: underline; }
 .footer-coordinate { color: var(--jade); font: 12px var(--mono); white-space: nowrap; }
-/* Interior pages share the coordinate system, with quieter reading layouts. */
+/* Interior page layouts. */
 .page-heading { padding-block: 69px 50px; border-bottom: 1px solid var(--line); }
 .page-heading h1 { font-size: clamp(42px, 5.2vw, 69px); max-width: 970px; line-height: 1.08; }
 .page-lede { margin-top: 28px; max-width: 740px; font-size: 19px; color: var(--muted); line-height: 1.75; }

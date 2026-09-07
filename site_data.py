@@ -14,8 +14,7 @@ SITE = {
     "url": "",
 }
 
-# Only the three supplied documents. Dates are document dates, not publication
-# claims. Source HTML is copied without modification.
+# Use the dates shown in the tutorial documents. The build copies HTML unchanged.
 TUTORIALS = [
     {
         "slug": "pc-prior",

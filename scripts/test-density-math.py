@@ -70,8 +70,7 @@ class DensityMathTests(unittest.TestCase):
                 reference = -0.5 * (math.log(TAU) + math.log(kappa)) + 0.125 / kappa
                 actual = log_bessel_i0_scaled(kappa)
                 self.assertTrue(math.isfinite(actual))
-                # The retained higher terms differ from the user's R leading
-                # approximation by O(kappa^-2), below 6.3e-12 in this regime.
+                # Higher-order terms contribute O(kappa^-2), below 6.3e-12 here.
                 self.assertAlmostEqual(actual, reference, delta=6.3e-12)
         self.assertTrue(math.isfinite(log_vm_density(0, 0, 1e6)))
         self.assertTrue(math.isfinite(log_vm_density(math.pi, 0, 1e6)))
