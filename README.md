@@ -113,20 +113,57 @@ reduced-motion setting disables animation without changing the density values.
 
 ## Replace tutorial documents
 
-Render the updated tutorials in your tutorial project, then copy the exported
-HTML into this website:
+The update flows through three locations:
 
-```bash
-cd /home/xiang/websites/directional-statistics
-cp /home/xiang/Tutorials/Stan_circular_tutorials/pc_prior/pc_prior.html content/tutorials/pc-prior/pc_prior.html
-cp /home/xiang/Tutorials/Stan_circular_tutorials/lavm/lavm.html content/tutorials/lavm/lavm.html
-cp /home/xiang/Tutorials/Stan_circular_tutorials/circular_joint_regression/circular_joint_regression.html content/tutorials/circular-joint-regression/circular_joint_regression.html
-.venv/bin/python build.py
+```text
+Tutorial project: rendered .html exports
+  → content/tutorials/: website source copies
+  → build.py → docs/assets/tutorials/: served documents
+             + docs/tutorials/<slug>/index.html: reading pages
 ```
 
-Also replace the matching `wind_data.rds` beside the LAvM or joint tutorial if
-its data changes. Update titles, summaries or document dates in
-`site_data.py` → `TUTORIALS` as needed.
+1. Render the updated tutorials in `/home/xiang/Tutorials/Stan_circular_tutorials/`.
+2. Copy the three exported HTML files into this website:
+
+   ```bash
+   cd /home/xiang/websites/directional-statistics
+   cp /home/xiang/Tutorials/Stan_circular_tutorials/pc_prior/pc_prior.html content/tutorials/pc-prior/pc_prior.html
+   cp /home/xiang/Tutorials/Stan_circular_tutorials/lavm/lavm.html content/tutorials/lavm/lavm.html
+   cp /home/xiang/Tutorials/Stan_circular_tutorials/circular_joint_regression/circular_joint_regression.html content/tutorials/circular-joint-regression/circular_joint_regression.html
+   ```
+
+3. If the data changed, also copy each tutorial's `wind_data.rds` into its
+   corresponding `content/tutorials/` folder. The LAvM and joint tutorials each
+   have their own copy. For the 7 September 2026 update, both data files already
+   matched the tutorial project, so no data replacement was needed.
+4. Edit `site_data.py` → `TUTORIALS` so the reading-page metadata agrees with
+   each exported document. Match the document's date, not the date you copied it.
+   Keep both date fields consistent; for example:
+
+   ```python
+   "date": "2026-09-07",
+   "display_date": "7 September 2026",
+   ```
+
+   Update `title`, `menu_title` and `summary` if the document's title or scope
+   changed. Keep `slug` and `filename` unchanged when replacing these documents.
+5. Rebuild and check the output:
+
+   ```bash
+   .venv/bin/python build.py
+   .venv/bin/python validate.py
+   .venv/bin/python scripts/test-tutorial-versions.py
+   ```
+
+   Validation checks local links and confirms that generated tutorial files
+   exactly match the website source copies. The version tests check that changed
+   HTML receives a new URL even if its file timestamp is preserved.
+6. Start the server described in **Local preview**, open all three reading pages,
+   and check the embedded document, its table of contents, equations,
+   **Open full document**, **Download HTML** and any wind-data download.
+   Check both desktop and narrow/mobile widths.
+7. After previewing, use the **Publish an update** instructions above to update
+   GitHub Pages. Copying and rebuilding only update the local website.
 
 The build copies these HTML files unchanged into `docs/assets/tutorials/`;
 it never modifies the originals in your tutorial project. Updating the external
@@ -134,6 +171,11 @@ originals alone does not update the website. For theme changes, edit the tutoria
 own stylesheet, render it again, copy the HTML and rebuild. Keep exports
 self-contained; if you add companion assets, update the build to copy them too.
 The current tutorials require internet access for MathJax equation rendering.
+
+Each rebuild calculates a SHA-256 content hash for each tutorial and adds a
+`?v=<hash>` suffix to its iframe, full-document and HTML-download URLs. This
+refreshes cached documents automatically; you do not need to rename the HTML
+files or edit generated links. The stable reading-page routes stay the same.
 
 Stable reading-page links:
 

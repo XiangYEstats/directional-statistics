@@ -11,7 +11,7 @@
 
 <meta name="author" content="Xiang Ye" />
 
-<meta name="date" content="2026-09-04" />
+<meta name="date" content="2026-09-07" />
 
 <title>Tutorial: Joint regression with circular covariates</title>
 
@@ -1322,435 +1322,414 @@ if (window.hljs) {
 
 
 
-<style type="text/css">/* Reading theme for the three R Markdown tutorials.
-   Porcelain, enamel blue and jade echo Directional Statistics / site.css.
-   Flat surfaces, dark text and restrained accents keep long pages comfortable. */
+<style type="text/css">
 :root {
-  color-scheme: light;
-  --tutorial-paper: #fcfcf8;
-  --tutorial-background: #f0f4f0;
-  --tutorial-ink: #294255;
-  --tutorial-muted: #52697a;
-  --tutorial-navy: #244769;
-  --tutorial-blue: #295ba4;
-  --tutorial-jade: #207a6c;
-  --tutorial-jade-soft: #e7f1eb;
-  --tutorial-line: #cedfe2;
-  --tutorial-code: #eef3f2;
-  --tutorial-code-comment: #556d68;
-  --tutorial-coral: #994b3d;
-  --tutorial-violet: #69549a;
-  --tutorial-sans: "Inter", "Aptos", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --tutorial-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+color-scheme: light;
+--tutorial-paper: #fcfcf8;
+--tutorial-background: #f0f4f0;
+--tutorial-ink: #294255;
+--tutorial-muted: #52697a;
+--tutorial-navy: #244769;
+--tutorial-blue: #295ba4;
+--tutorial-jade: #207a6c;
+--tutorial-jade-soft: #e7f1eb;
+--tutorial-line: #cedfe2;
+--tutorial-code: #eef3f2;
+--tutorial-code-comment: #556d68;
+--tutorial-coral: #994b3d;
+--tutorial-violet: #69549a;
+--tutorial-sans: "Inter", "Aptos", "Segoe UI", system-ui, -apple-system, sans-serif;
+--tutorial-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
-
 html {
-  /* Tocify animates section links; a second CSS animation delays navigation. */
-  scroll-behavior: auto;
-  scroll-padding-top: 28px;
+scroll-behavior: auto;
+scroll-padding-top: var(--tutorial-scroll-offset, 28px);
 }
-
 body {
-  margin: 0;
-  padding: 32px 24px 64px;
-  background: var(--tutorial-background);
-  color: var(--tutorial-ink);
-  font-family: var(--tutorial-sans);
-  font-size: 17px;
-  line-height: 1.8;
-  -webkit-font-smoothing: antialiased;
+margin: 0;
+padding: 32px 24px 64px;
+background: var(--tutorial-background);
+color: var(--tutorial-ink);
+font-family: var(--tutorial-sans);
+font-size: 17px;
+line-height: 1.8;
+-webkit-font-smoothing: antialiased;
 }
 
-/* A bounded reading column with navigation sized to its actual grid cell.
-   Specific selectors override the later R Markdown / Bootstrap defaults. */
 div.main-container {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 1120px !important;
-  margin-inline: auto;
-  padding: 44px 40px 72px;
-  border: 1px solid var(--tutorial-line);
-  border-radius: 4px;
-  background: var(--tutorial-paper);
-  box-shadow: none;
+box-sizing: border-box;
+width: 100%;
+max-width: 1120px !important;
+margin-inline: auto;
+padding: 44px 40px 72px;
+border: 1px solid var(--tutorial-line);
+border-radius: 4px;
+background: var(--tutorial-paper);
+box-shadow: none;
 }
-
 div.main-container > .row {
-  display: grid;
-  grid-template-columns: 232px minmax(0, 1fr);
-  align-items: start;
-  gap: 48px;
-  margin: 0;
+display: grid;
+grid-template-columns: 232px minmax(0, 1fr);
+align-items: start;
+gap: 48px;
+margin: 0;
 }
-
 div.main-container > .row::before,
 div.main-container > .row::after {
-  display: none;
+display: none;
 }
-
 div.main-container > .row > .col-xs-12 {
-  float: none;
-  width: auto;
-  min-width: 0;
-  padding: 0;
+float: none;
+width: auto;
+min-width: 0;
+padding: 0;
 }
-
 div.main-container > .row > .col-sm-4 {
-  position: sticky;
-  top: 24px;
+position: sticky;
+top: 24px;
+z-index: 10;
 }
-
 div.main-container .toc-content {
-  min-width: 0;
-  padding: 0 !important;
-  overflow-wrap: break-word;
+min-width: 0;
+padding: 0 !important;
+overflow-wrap: break-word;
 }
-
 #header {
-  margin-bottom: 34px;
-  padding-bottom: 26px;
-  border-bottom: 1px solid var(--tutorial-line);
+margin-bottom: 34px;
+padding-bottom: 26px;
+border-bottom: 1px solid var(--tutorial-line);
 }
-
 #header::before {
-  display: block;
-  width: 46px;
-  height: 3px;
-  margin-bottom: 22px;
-  background: var(--tutorial-jade);
-  content: "";
+display: block;
+width: 46px;
+height: 3px;
+margin-bottom: 22px;
+background: var(--tutorial-jade);
+content: "";
 }
-
 h1, h2, h3, h4, h5, h6 {
-  color: var(--tutorial-navy);
-  font-family: var(--tutorial-sans);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.35;
-  overflow-wrap: break-word;
+color: var(--tutorial-navy);
+font-family: var(--tutorial-sans);
+font-weight: 600;
+letter-spacing: -0.02em;
+line-height: 1.35;
+overflow-wrap: break-word;
 }
-
 h1.title {
-  margin: 0 0 22px;
-  font-size: clamp(30px, 3.1vw, 40px);
-  font-weight: 550;
-  letter-spacing: -0.03em;
-  line-height: 1.22;
+margin: 0 0 22px;
+font-size: clamp(30px, 3.1vw, 40px);
+font-weight: 550;
+letter-spacing: -0.03em;
+line-height: 1.22;
 }
-
 h4.author, h4.date {
-  display: inline-block;
-  margin: 0 20px 0 0;
-  color: var(--tutorial-muted);
-  font-size: 14px;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.7;
+display: inline-block;
+margin: 0 20px 0 0;
+color: var(--tutorial-muted);
+font-size: 14px;
+font-weight: 400;
+letter-spacing: 0;
+line-height: 1.7;
 }
-
 h1:not(.title) {
-  margin: 56px 0 22px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--tutorial-line);
-  font-size: clamp(27px, 2.5vw, 32px);
+margin: 56px 0 22px;
+padding-bottom: 12px;
+border-bottom: 1px solid var(--tutorial-line);
+font-size: clamp(27px, 2.5vw, 32px);
 }
-
 h2 {
-  margin: 38px 0 18px;
-  font-size: clamp(23px, 2.1vw, 27px);
+margin: 38px 0 18px;
+font-size: clamp(23px, 2.1vw, 27px);
 }
-
 h3 {
-  margin: 30px 0 14px;
-  font-size: 22px;
+margin: 30px 0 14px;
+font-size: 22px;
 }
-
 h4 { margin: 26px 0 12px; font-size: 19px; }
 h5, h6 { margin: 24px 0 12px; font-size: 17px; }
-
 .header-section-number {
-  margin-right: 0.25em;
-  color: var(--tutorial-jade);
-  font-variant-numeric: tabular-nums;
+margin-right: 0.25em;
+color: var(--tutorial-jade);
+font-variant-numeric: tabular-nums;
 }
-
 p { margin: 0 0 1.1em; }
 ul, ol { margin-bottom: 1.25em; padding-left: 1.5em; }
 li + li { margin-top: 0.35em; }
 strong { font-weight: 650; }
-
 a {
-  color: var(--tutorial-blue);
-  text-decoration: underline;
-  text-decoration-color: #819db9;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
+color: var(--tutorial-blue);
+text-decoration: underline;
+text-decoration-color: #819db9;
+text-decoration-thickness: 1px;
+text-underline-offset: 0.18em;
 }
-
 a:hover, a:focus {
-  color: var(--tutorial-jade);
-  text-decoration-color: currentColor;
+color: var(--tutorial-jade);
+text-decoration-color: currentColor;
 }
-
 a:focus-visible, button:focus-visible, summary:focus-visible,
 [tabindex]:focus-visible, pre:focus-visible {
-  outline: 2px solid var(--tutorial-blue);
-  outline-offset: 3px;
+outline: 2px solid var(--tutorial-blue);
+outline-offset: 3px;
 }
-
 ::selection {
-  background: #c7e9e5;
-  color: var(--tutorial-navy);
+background: #c7e9e5;
+color: var(--tutorial-navy);
 }
-
 blockquote, .tutorial-note {
-  margin: 26px 0;
-  padding: 18px 22px;
-  border: 1px solid var(--tutorial-line);
-  border-left: 3px solid var(--tutorial-jade);
-  border-radius: 0 3px 3px 0;
-  background: #f0f6f1;
-  color: var(--tutorial-ink);
-  font-size: inherit;
+margin: 26px 0;
+padding: 18px 22px;
+border: 1px solid var(--tutorial-line);
+border-left: 3px solid var(--tutorial-jade);
+border-radius: 0 3px 3px 0;
+background: #f0f6f1;
+color: var(--tutorial-ink);
+font-size: inherit;
 }
-
 blockquote > :last-child, .tutorial-note > :last-child {
-  margin-bottom: 0;
+margin-bottom: 0;
 }
 
-/* Source and console output remain distinct, with readable comment colors. */
 pre, pre:not([class]) {
-  max-width: 100%;
-  margin: 24px 0;
-  padding: 18px 20px;
-  border: 1px solid var(--tutorial-line);
-  border-radius: 4px;
-  background: #f5f6f2;
-  color: var(--tutorial-ink);
-  font-family: var(--tutorial-mono);
-  font-size: 14px;
-  line-height: 1.65;
-  white-space: pre;
-  overflow-wrap: normal;
-  word-break: normal;
-  overflow-x: auto;
-  box-shadow: none;
+max-width: 100%;
+margin: 24px 0;
+padding: 18px 20px;
+border: 1px solid var(--tutorial-line);
+border-radius: 4px;
+background: #f5f6f2;
+color: var(--tutorial-ink);
+font-family: var(--tutorial-mono);
+font-size: 14px;
+line-height: 1.65;
+white-space: pre;
+overflow-wrap: normal;
+word-break: normal;
+overflow-x: auto;
+box-shadow: none;
 }
-
 pre.r, pre.stan, pre.sourceCode {
-  border-left: 3px solid #8eafa6;
-  background: var(--tutorial-code);
+border-left: 3px solid #8eafa6;
+background: var(--tutorial-code);
 }
-
 div.sourceCode {
-  margin: 24px 0;
-  background: transparent;
-  overflow: visible;
+margin: 24px 0;
+background: transparent;
+overflow: visible;
 }
-
 div.sourceCode > pre { margin: 0; }
-
 code, kbd, samp {
-  font-family: var(--tutorial-mono);
+font-family: var(--tutorial-mono);
 }
-
 code {
-  padding: 0.12em 0.3em;
-  border-radius: 3px;
-  background: var(--tutorial-code);
-  color: #275e55;
-  font-size: 0.88em;
-  white-space: normal;
-  overflow-wrap: anywhere;
+padding: 0.12em 0.3em;
+border-radius: 3px;
+background: var(--tutorial-code);
+color: #275e55;
+font-size: 0.88em;
+white-space: normal;
+overflow-wrap: anywhere;
 }
-
 a code { color: inherit; }
-
 pre code, pre code.hljs {
-  display: block;
-  padding: 0;
-  background: transparent;
-  color: var(--tutorial-ink);
-  font-size: inherit;
-  line-height: inherit;
-  white-space: pre;
-  overflow-wrap: normal;
+display: block;
+padding: 0;
+background: transparent;
+color: var(--tutorial-ink);
+font-size: inherit;
+line-height: inherit;
+white-space: pre;
+overflow-wrap: normal;
 }
-
 .hljs { background: transparent; color: var(--tutorial-ink); }
 .hljs-comment, .hljs-quote, code span.co, code span.do {
-  color: var(--tutorial-code-comment);
-  font-style: normal;
+color: var(--tutorial-code-comment);
+font-style: normal;
 }
 .hljs-keyword, .hljs-name, .hljs-selector-tag, .hljs-type,
 code span.kw, code span.dt, code span.cf {
-  color: var(--tutorial-blue);
-  font-weight: 600;
+color: var(--tutorial-blue);
+font-weight: 600;
 }
 .hljs-string, .hljs-regexp, .hljs-addition, code span.st, code span.vs, code span.ch {
-  color: #24695a;
+color: #24695a;
 }
 .hljs-number, .hljs-literal, .hljs-deletion, code span.dv, code span.fl, code span.bn {
-  color: var(--tutorial-coral);
+color: var(--tutorial-coral);
 }
 .hljs-built_in, .hljs-builtin-name, .hljs-title, .hljs-section,
 .hljs-function .hljs-title, code span.fu {
-  color: var(--tutorial-blue);
+color: var(--tutorial-blue);
 }
 .hljs-attr, .hljs-attribute, .hljs-symbol, .hljs-bullet,
 .hljs-meta, .hljs-variable, .hljs-template-variable {
-  color: var(--tutorial-violet);
+color: var(--tutorial-violet);
 }
 .hljs-params, .hljs-subst, code span.op { color: var(--tutorial-ink); }
 
-/* Wide displays scroll locally; inline mathematics stays in the text flow. */
 .math.display, .MathJax_Display, .MathJax_SVG_Display,
 mjx-container[display="true"] {
-  display: block;
-  max-width: 100%;
-  margin-block: 1.4em !important;
-  padding-block: 0.15em;
-  color: var(--tutorial-ink);
-  overflow-x: auto;
-  overflow-y: hidden;
+display: block;
+max-width: 100%;
+margin-block: 1.4em !important;
+padding-block: 0.15em;
+color: var(--tutorial-ink);
+overflow-x: auto;
+overflow-y: hidden;
 }
-
 img { max-width: 100%; height: auto; }
 p > img, .figure { margin-block: 28px; }
 .figure .caption, p.caption, figcaption, table caption {
-  margin-top: 10px;
-  color: var(--tutorial-muted);
-  font-size: 14px;
-  line-height: 1.65;
-  text-align: left;
+margin-top: 10px;
+color: var(--tutorial-muted);
+font-size: 14px;
+line-height: 1.65;
+text-align: left;
 }
-
 table {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  margin: 26px 0;
-  border-collapse: collapse;
-  background: var(--tutorial-paper);
-  font-size: 14px;
-  font-variant-numeric: tabular-nums;
-  overflow-x: auto;
+display: block;
+width: 100%;
+max-width: 100%;
+margin: 26px 0;
+border-collapse: collapse;
+background: var(--tutorial-paper);
+font-size: 14px;
+font-variant-numeric: tabular-nums;
+overflow-x: auto;
 }
-
 th, td {
-  padding: 10px 12px !important;
-  border-color: var(--tutorial-line) !important;
-  line-height: 1.6;
+padding: 10px 12px !important;
+border-color: var(--tutorial-line) !important;
+line-height: 1.6;
 }
-
 th {
-  background: var(--tutorial-jade-soft);
-  color: var(--tutorial-navy);
-  font-weight: 600;
+background: var(--tutorial-jade-soft);
+color: var(--tutorial-navy);
+font-weight: 600;
 }
-
 tbody tr:nth-child(even) { background: #f2f6f2; }
 hr { margin: 40px 0; border: 0; border-top: 1px solid var(--tutorial-line); }
 
-/* Quiet, persistent navigation. The active marker complements its color. */
 div#TOC.tocify {
-  position: static !important;
-  width: 100% !important;
-  max-width: none;
-  max-height: calc(100vh - 48px);
-  margin: 0 !important;
-  padding: 10px 0;
-  border: 1px solid var(--tutorial-line);
-  border-top: 2px solid var(--tutorial-jade);
-  border-radius: 3px;
-  background: #f5f8f4;
-  box-shadow: none;
-  font-size: 14px;
-  overflow-x: hidden;
-  overflow-y: auto;
+position: static !important;
+width: 100% !important;
+max-width: none;
+max-height: calc(100vh - 48px) !important;
+max-height: calc(100dvh - 48px) !important;
+margin: 0 !important;
+padding: 0 0 8px;
+border: 1px solid var(--tutorial-line);
+border-top: 2px solid var(--tutorial-jade);
+border-radius: 3px;
+background: #f5f8f4;
+box-shadow: none;
+font-size: 14px;
+overflow-x: hidden;
+overflow-y: auto;
+overscroll-behavior: contain;
+scrollbar-gutter: stable;
+scroll-padding-top: 48px;
+scroll-padding-bottom: 8px;
 }
-
+.tutorial-toc-title {
+position: sticky;
+top: 0;
+z-index: 1;
+margin: 0;
+padding: 10px 14px;
+border-bottom: 1px solid var(--tutorial-line);
+background: #f5f8f4;
+color: var(--tutorial-navy);
+font-size: 14px;
+font-weight: 650;
+}
 #TOC .tocify-header { font-family: var(--tutorial-sans); }
 #TOC ul, #TOC li { line-height: 1.55; }
 #TOC li + li { margin-top: 0; }
 #TOC .tocify-subheader { margin: 0; }
+#TOC.tutorial-navigation .tocify-subheader { display: block !important; }
+#TOC.tutorial-navigation .tocify-subheader[hidden] { display: none !important; }
 #TOC .tocify-subheader .tocify-item { font-size: 13px; }
 #TOC .tocify-item {
-  display: block;
-  margin: 0;
-  padding: 9px 14px;
-  border: 0;
-  border-left: 3px solid transparent;
-  border-radius: 0;
-  background: transparent;
-  color: var(--tutorial-muted);
-  line-height: 1.55;
-  text-decoration: none;
-  text-indent: 0;
-  white-space: normal;
-  overflow-wrap: break-word;
+display: block;
+margin: 0;
+padding: 9px 14px;
+border: 0;
+border-left: 3px solid transparent;
+border-radius: 0;
+background: transparent;
+color: var(--tutorial-muted);
+line-height: 1.55;
+text-decoration: none;
+text-indent: 0;
+white-space: normal;
+overflow-wrap: break-word;
 }
-
 #TOC .tocify-subheader .tocify-item { padding-left: 24px; }
 #TOC .tocify-subheader .tocify-subheader .tocify-item { padding-left: 34px; }
 #TOC .tocify-item:hover { background: #eaf1ec; color: var(--tutorial-navy); }
 #TOC .tocify-item.active,
 #TOC .tocify-item.active:hover,
 #TOC .tocify-item.active:focus {
-  border-left-color: var(--tutorial-jade);
-  background: var(--tutorial-jade-soft);
-  color: #1e6257;
-  font-weight: 600;
+border-left-color: var(--tutorial-jade);
+background: var(--tutorial-jade-soft);
+color: #1e6257;
+font-weight: 600;
+}
+#TOC .tocify-item > a {
+display: block;
+color: inherit;
+text-decoration: none;
 }
 
-#TOC .tocify-item > a { color: inherit; text-decoration: none; }
+#TOC.tutorial-navigation .tocify-item,
+#TOC.tutorial-navigation .tocify-subheader .tocify-item { padding: 0; }
+#TOC.tutorial-navigation .tocify-item > a { padding: 9px 14px 9px 11px; }
+#TOC.tutorial-navigation .tocify-subheader .tocify-item > a { padding-left: 21px; }
+#TOC.tutorial-navigation .tocify-subheader .tocify-subheader .tocify-item > a { padding-left: 31px; }
 #TOC .tocify-item:focus-visible, #TOC .tocify-item > a:focus-visible { outline-offset: -3px; }
 
-/* Prevent Tocify from appending a blank viewport after the last section. */
 .tocify-extend-page {
-  display: none !important;
-  height: 0 !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
+display: none !important;
+height: 0 !important;
+min-height: 0 !important;
+margin: 0 !important;
+padding: 0 !important;
 }
-
-@media (max-width: 1099px) {
-  body { padding: 20px 20px 40px; }
-  div.main-container { max-width: 840px !important; padding: 32px 36px 56px; }
-  div.main-container > .row { grid-template-columns: minmax(0, 1fr); gap: 32px; }
-  div.main-container > .row > .col-sm-4 { position: static; }
-  div#TOC.tocify { max-height: 280px; }
+@media (max-width: 991px) {
+body { padding: 20px 20px 40px; }
+div.main-container { max-width: 840px !important; padding: 32px 36px 56px; }
+div.main-container > .row { display: block; }
+div.main-container > .row > .col-sm-4 { position: static; }
+div.main-container .toc-content { margin-top: 32px; }
+div#TOC.tocify { max-height: 280px !important; }
 }
-
 @media (max-width: 620px) {
-  body { padding: 0; font-size: 16px; line-height: 1.8; }
-  div.main-container { padding: 24px 20px 48px; border: 0; border-radius: 0; }
-  div.main-container > .row { gap: 28px; }
-  div#TOC.tocify { max-height: 240px; }
-  #header { margin-bottom: 28px; padding-bottom: 22px; }
-  h1.title { font-size: 30px; }
-  h1:not(.title) { margin-top: 44px; }
-  h2 { margin-top: 32px; }
-  pre, pre:not([class]) { padding: 15px 14px; font-size: 13px; }
-  blockquote, .tutorial-note { padding: 16px; }
+body { padding: 0; font-size: 16px; line-height: 1.8; }
+div.main-container { padding: 24px 20px 48px; border: 0; border-radius: 0; }
+div.main-container .toc-content { margin-top: 28px; }
+div#TOC.tocify { max-height: 240px !important; }
+#header { margin-bottom: 28px; padding-bottom: 22px; }
+h1.title { font-size: 30px; }
+h1:not(.title) { margin-top: 44px; }
+h2 { margin-top: 32px; }
+pre, pre:not([class]) { padding: 15px 14px; font-size: 13px; }
+blockquote, .tutorial-note { padding: 16px; }
 }
-
 @media print {
-  body { padding: 0; background: #fff; color: #222; font-size: 11pt; }
-  div.main-container { max-width: none !important; padding: 0; border: 0; background: #fff; }
-  div.main-container > .row { display: block; }
-  div.main-container > .row > .col-sm-4, #TOC, .tocify { display: none !important; }
-  div.main-container .toc-content { float: none !important; width: 100%; }
-  h1, h2, h3, h4, h5, h6 { break-after: avoid; }
-  h1.title { font-size: 26pt; }
-  a { color: inherit; text-decoration: none; }
-  a[href]::after { content: none !important; }
-  pre, pre:not([class]) { border-color: #ccc; background: #f7f7f7; white-space: pre-wrap; }
-  pre code, pre code.hljs { white-space: pre-wrap; overflow-wrap: anywhere; }
-  .math.display, .MathJax_Display, .MathJax_SVG_Display,
-  mjx-container[display="true"], table { overflow: visible; }
-  table { display: table; }
+body { padding: 0; background: #fff; color: #222; font-size: 11pt; }
+div.main-container { max-width: none !important; padding: 0; border: 0; background: #fff; }
+div.main-container > .row { display: block; }
+div.main-container > .row > .col-sm-4, #TOC, .tocify { display: none !important; }
+div.main-container .toc-content { float: none !important; width: 100%; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid; }
+h1.title { font-size: 26pt; }
+a { color: inherit; text-decoration: none; }
+a[href]::after { content: none !important; }
+pre, pre:not([class]) { border-color: #ccc; background: #f7f7f7; white-space: pre-wrap; }
+pre code, pre code.hljs { white-space: pre-wrap; overflow-wrap: anywhere; }
+.math.display, .MathJax_Display, .MathJax_SVG_Display,
+mjx-container[display="true"], table { overflow: visible; }
+table { display: table; }
 }
 </style>
 
@@ -1913,7 +1892,7 @@ border-radius: 0px;
 <h1 class="title toc-ignore">Tutorial: Joint regression with circular
 covariates</h1>
 <h4 class="author">Xiang Ye</h4>
-<h4 class="date">2026-09-04</h4>
+<h4 class="date">2026-09-07</h4>
 
 </div>
 
@@ -3520,6 +3499,186 @@ response-specific temporal effects.</p>
 </div>
 </div>
 
+<script id="tutorial-navigation">
+/* Shared enhancement for the TOC generated by R Markdown / Tocify. */
+(function () {
+  "use strict";
+
+  function initializeNavigation() {
+    var toc = document.getElementById("TOC");
+    var content = document.querySelector(".toc-content");
+    if (!toc || !content || toc.classList.contains("tutorial-navigation")) return;
+
+    var $ = window.jQuery;
+    var widget = $(toc).data("toc-tocify");
+    if (!widget) return;
+
+    // Tocify chooses the nearest heading, which can be a section not yet read.
+    // Keep its generated outline and use the last heading above the reading line.
+    widget.option({
+      showAndHide: false,
+      showAndHideOnScroll: false,
+      highlightOnScroll: false,
+      highlightDefault: false,
+      extendPage: false,
+      history: false,
+      scrollHistory: false,
+      smoothScroll: false
+    });
+    $(window).off("scroll.tocify");
+    $(toc).off("click.tocify");
+    $(toc).find(".tocify-subheader").stop(true, true);
+
+    var anchors = new Map();
+    content.querySelectorAll("div[data-unique]").forEach(function (anchor) {
+      anchors.set(anchor.getAttribute("data-unique"), anchor);
+    });
+    var entries = [];
+    toc.querySelectorAll(".tocify-item").forEach(function (item) {
+      var anchor = anchors.get(item.getAttribute("data-unique"));
+      var heading = anchor && anchor.nextElementSibling;
+      if (!heading || !/^H[1-3]$/.test(heading.tagName)) return;
+      var section = heading.closest(".section[id]");
+      var target = section || heading;
+      if (!target.id) target.id = item.getAttribute("data-unique");
+      var link = document.createElement("a");
+      link.href = "#" + encodeURIComponent(target.id);
+      while (item.firstChild) link.appendChild(item.firstChild);
+      item.appendChild(link);
+      entries.push({ item: item, link: link, heading: heading, target: target,
+        legacyHash: item.getAttribute("data-unique") });
+    });
+    if (!entries.length) return;
+
+    toc.classList.add("tutorial-navigation");
+    toc.setAttribute("role", "navigation");
+    toc.setAttribute("aria-label", "Table of contents");
+    var title = document.createElement("div");
+    title.className = "tutorial-toc-title";
+    title.textContent = "Contents";
+    toc.insertBefore(title, toc.firstChild);
+
+    var branches = Array.from(toc.querySelectorAll(".tocify-subheader"));
+    var desktop = window.matchMedia("(min-width: 992px)");
+    var active = null;
+    var frame = 0;
+    var offset = 28;
+
+    function expandCurrentBranch(current) {
+      var expanded = new Set();
+      if (current) {
+        // Tocify places each child list after its owning item, not inside it.
+        var children = current.item.nextElementSibling;
+        if (children && children.classList.contains("tocify-subheader")) expanded.add(children);
+        for (var parent = current.item.parentElement; parent && parent !== toc;
+            parent = parent.parentElement) {
+          if (parent.classList.contains("tocify-subheader")) expanded.add(parent);
+        }
+      }
+      var changed = false;
+      branches.forEach(function (branch) {
+        // Keep the inline outline stable on small screens; changing its height
+        // while reading would also move the article beneath it.
+        var hidden = desktop.matches && !expanded.has(branch);
+        if (branch.hidden !== hidden) changed = true;
+        branch.hidden = hidden;
+        var owner = branch.previousElementSibling;
+        var link = owner && owner.querySelector("a");
+        if (link) link.setAttribute("aria-expanded", String(!hidden));
+      });
+      // If scrolling closes a focused branch, keep keyboard focus visible.
+      var focused = document.activeElement;
+      while (focused && toc.contains(focused)) {
+        var hiddenBranch = focused.closest(".tocify-subheader[hidden]");
+        if (!hiddenBranch) break;
+        focused = hiddenBranch.previousElementSibling.querySelector("a");
+      }
+      if (focused && focused !== document.activeElement) focused.focus({ preventScroll: true });
+      return changed;
+    }
+
+    function reveal(entry) {
+      // Scroll only the outline; scrollIntoView would also move the article.
+      var bounds = toc.getBoundingClientRect();
+      var row = entry.item.getBoundingClientRect();
+      var top = bounds.top + title.offsetHeight + 6;
+      var bottom = bounds.bottom - 8;
+      if (row.top < top) toc.scrollTop += row.top - top;
+      else if (row.bottom > bottom) toc.scrollTop += row.bottom - bottom;
+    }
+
+    function update() {
+      frame = 0;
+      var current = null;
+      entries.forEach(function (entry) {
+        if (entry.heading.getBoundingClientRect().top <= offset + 2) current = entry;
+      });
+      // A short final section may never reach the reading line.
+      if (window.scrollY > 0 && window.scrollY + window.innerHeight >=
+          document.documentElement.scrollHeight - 2) current = entries[entries.length - 1];
+      entries.forEach(function (entry) {
+        entry.item.classList.toggle("active", entry === current);
+        if (entry === current) entry.link.setAttribute("aria-current", "location");
+        else entry.link.removeAttribute("aria-current");
+      });
+      var branchesChanged = expandCurrentBranch(current);
+      if (current && (current !== active || branchesChanged)) reveal(current);
+      active = current;
+    }
+
+    function scheduleUpdate() {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    }
+
+    function measure() {
+      document.documentElement.style.setProperty("--tutorial-scroll-offset", offset + "px");
+      if (active) reveal(active);
+      scheduleUpdate();
+    }
+
+    function followHash() {
+      var hash;
+      try { hash = decodeURIComponent(window.location.hash.slice(1)); }
+      catch (error) { return; }
+      var entry = entries.find(function (candidate) {
+        return candidate.target.id === hash || candidate.legacyHash === hash;
+      });
+      if (entry) {
+        window.scrollTo(0, window.scrollY + entry.heading.getBoundingClientRect().top - offset);
+      }
+      scheduleUpdate();
+    }
+
+    toc.addEventListener("click", function (event) {
+      var link = event.target.closest("a");
+      if (!link || event.button !== 0 || event.metaKey || event.ctrlKey ||
+          event.shiftKey || event.altKey) return;
+      // Native links retain copy/open-in-new-tab and browser history behavior.
+      // Re-align after the native jump to account for section heading margins.
+      window.requestAnimationFrame(followHash);
+    });
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", measure);
+    // Leave Back/Forward scroll restoration to the browser.
+    window.addEventListener("hashchange", scheduleUpdate);
+    window.addEventListener("load", function () { measure(); followHash(); });
+    window.addEventListener("pageshow", scheduleUpdate);
+    if (window.ResizeObserver) {
+      var observer = new ResizeObserver(function () { measure(); });
+      observer.observe(toc);
+      observer.observe(content);
+    }
+    measure();
+    followHash();
+  }
+
+  // after_body includes precede R Markdown's own ready callbacks. Defer one
+  // task so Tocify has built its outline in both fresh and refreshed renders.
+  if (window.jQuery) {
+    window.jQuery(function () { window.setTimeout(initializeNavigation, 0); });
+  }
+}());
+</script>
 
 
 </div>
@@ -3579,7 +3738,7 @@ $(document).ready(function ()  {
       scrollTo: 0
     };
     options.showAndHide = true;
-    options.smoothScroll = true;
+    options.smoothScroll = false;
 
     // tocify
     var toc = $("#TOC").tocify(options).data("toc-tocify");

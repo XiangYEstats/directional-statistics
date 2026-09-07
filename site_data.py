@@ -25,8 +25,8 @@ TUTORIALS = [
         "implementation": "Stan",
         "summary": "Construct and calibrate PC priors for von Mises concentration, with circular-uniform and point-mass base models.",
         "filename": "pc_prior.html",
-        "date": "2026-09-06",
-        "display_date": "6 September 2026",
+        "date": "2026-09-07",
+        "display_date": "7 September 2026",
         "data_files": [],
     },
     {
@@ -37,8 +37,8 @@ TUTORIALS = [
         "implementation": "Stan",
         "summary": "Explore link-adjusted von Mises regression, from fixed effects to temporal structure and wind-direction data.",
         "filename": "lavm.html",
-        "date": "2026-09-04",
-        "display_date": "4 September 2026",
+        "date": "2026-09-07",
+        "display_date": "7 September 2026",
         "data_files": ["wind_data.rds"],
     },
     {
@@ -49,8 +49,8 @@ TUTORIALS = [
         "implementation": "Stan",
         "summary": "Explore regression models with circular covariates and learn how to extend them to joint modelling.",
         "filename": "circular_joint_regression.html",
-        "date": "2026-09-04",
-        "display_date": "4 September 2026",
+        "date": "2026-09-07",
+        "display_date": "7 September 2026",
         "data_files": ["wind_data.rds"],
     },
 ]
