@@ -110,7 +110,7 @@ def validate(output):
         from math import pi
         from density_math import KAPPA_MAX, KAPPA_STEP
         expected_controls = {
-            "vm-location": (-pi, pi, "any"), "lavm-location": (-10, 10, 0.05),
+            "vm-location": (-pi, pi, "any"), "lavm-location": (-5, 5, 0.05),
             "vm-kappa": (0, KAPPA_MAX, KAPPA_STEP), "lavm-kappa": (0, KAPPA_MAX, KAPPA_STEP),
         }
         actual_controls = {item.get("id"): item for item in density_doc.inputs if item.get("type") == "range"}

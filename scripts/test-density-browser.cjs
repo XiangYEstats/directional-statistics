@@ -21,7 +21,7 @@ from density_math import density_settings, log_bessel_i0_scaled, log_vm_density,
 from density_diagrams import density_panels
 cases = []
 for kind, fn, locations in (("vm", log_vm_density, [-math.pi, -1.1, 0, 2.3, math.pi]),
-                            ("lavm", log_lavm_density, [-10, -4, -1.05, 0, 1.05, 4, 10])):
+                            ("lavm", log_lavm_density, [-5, -4, -1.05, 0, 1.05, 4, 5])):
     for kappa in [0, 0.1, 1, 2, 10, 50, 100, 1e6]:
         scaled = log_bessel_i0_scaled(kappa)
         for location in locations:
@@ -59,7 +59,7 @@ const integrationCount = 16384;
 const integrationWidth = TAU / integrationCount;
 for (const kind of ["vm", "lavm"]) {
   const density = kind === "vm" ? math.logVM : math.logLAvM;
-  const locations = kind === "vm" ? [-Math.PI, 0, 1.3, Math.PI] : [-10, -4, -1, 0, 1, 4, 10];
+  const locations = kind === "vm" ? [-Math.PI, 0, 1.3, Math.PI] : [-5, -4, -1, 0, 1, 4, 5];
   for (const kappa of [0, 0.05, 0.1, 0.912345, 1, 10, 49.99999, 50.00001, 83.48293, 100]) {
     const scaled = math.logScaledAt(kappa, settings);
     for (const location of locations) {
@@ -76,11 +76,11 @@ for (const kappa of [0, 0.1, 2, 100]) {
   const scaled = math.logScaledAt(kappa, settings);
   for (const x of [-Math.PI, -2, 0, 0.7, Math.PI]) {
     close(math.logLAvM(x, 0, kappa, scaled), math.logVM(x, 0, kappa, scaled), 2e-13, "eta zero identity");
-    for (const eta of [-10, -4, 0, 4, 10]) {
+    for (const eta of [-5, -4, 0, 4, 5]) {
       close(math.logLAvM(-x, -eta, kappa, scaled), math.logLAvM(x, eta, kappa, scaled), 2e-13, "reflection");
     }
   }
-  for (const eta of [-10, -4, 0, 4, 10]) {
+  for (const eta of [-5, -4, 0, 4, 5]) {
     close(math.logLAvM(-Math.PI, eta, kappa, scaled), math.logLAvM(Math.PI, eta, kappa, scaled), 0, "exact seam");
   }
   for (const mu of [-Math.PI, 0, Math.PI]) {
@@ -166,7 +166,7 @@ for (const peak of [0, 0.1, 0.5, 1, 2, 2.5, 5, 10, 100]) {
 // Check transformed peak resolution against a much denser angular grid.
 for (const kind of ["vm", "lavm"]) {
   const density = kind === "vm" ? math.logVM : math.logLAvM;
-  const locations = kind === "vm" ? [-Math.PI, -1.1, 0, Math.PI] : [-10, -4, -1.05, 0, 1.05, 4, 10];
+  const locations = kind === "vm" ? [-Math.PI, -1.1, 0, Math.PI] : [-5, -4, -1.05, 0, 1.05, 4, 5];
   for (const kappa of [0, 0.1, 0.9, 1, 2, 100]) {
     const scaled = math.logScaledAt(kappa, settings);
     for (const location of locations) {
@@ -343,7 +343,7 @@ for (const card of dom.cards) {
 
   for (const [newKappa, newLocation] of kind === "vm"
     ? [[100, -Math.PI], [100, Math.PI], [0, Math.PI / 2], [2.1, -Math.PI / 2], [3, 0.3456789]]
-    : [[100, -10], [100, 10], [0, 10], [0.9, -10], [2, 0]]) {
+    : [[100, -5], [100, 5], [0, 5], [0.9, -5], [2, 0]]) {
     kappa.value = String(newKappa);
     kappa.dispatch("input");
     location.value = String(newLocation);
@@ -393,7 +393,7 @@ for (const kind of ["vm", "lavm"]) {
   quick.run();
   const card = quick.cards.find(item => item.dataset.densityCard === kind);
   const location = card.querySelector("[data-density-location]");
-  location.value = kind === "vm" ? "2" : "10";
+  location.value = kind === "vm" ? "2" : "5";
   location.dispatch("input");
   quick.step(80);
   assert.equal(quick.frames.size, 0, "The transition must finish within 80 ms.");
@@ -410,7 +410,7 @@ for (const kind of ["vm", "lavm"]) {
   const location = card.querySelector("[data-density-location]");
   const original = card.querySelector("[data-density-polar]").getAttribute("d");
   kappa.value = "100";
-  location.value = kind === "vm" ? String(Math.PI) : "10";
+  location.value = kind === "vm" ? String(Math.PI) : "5";
   kappa.dispatch("input");
   location.dispatch("input");
   assert.equal(animation.frames.size, 1);
@@ -420,14 +420,14 @@ for (const kind of ["vm", "lavm"]) {
   const midway = animation.samples.at(-1);
   assert.ok(midway.kappa > 2 && midway.kappa < 100);
   assert.ok(midway.location > (kind === "vm" ? 0 : 1));
-  assert.ok(midway.location < (kind === "vm" ? Math.PI : 10));
+  assert.ok(midway.location < (kind === "vm" ? Math.PI : 5));
   const midwayPath = card.querySelector("[data-density-polar]").getAttribute("d");
   assert.notEqual(midwayPath, original);
   const target = math.sample(kind, Number(location.value), 100, settings);
   assert.notEqual(midwayPath, math.paths(target.points, target.scale).polar);
 
   kappa.value = "20";
-  location.value = kind === "vm" ? String(-Math.PI) : "-10";
+  location.value = kind === "vm" ? String(-Math.PI) : "-5";
   kappa.dispatch("input");
   location.dispatch("input");
   animation.step(0);

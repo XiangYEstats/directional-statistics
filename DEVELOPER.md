@@ -110,7 +110,7 @@ and −π/2 at the bottom. Density rises outward from the reference circle;
 the unwrapped view runs from −π to π. Both views label their density scales and
 rescale continuously. Keep the Python and JavaScript implementations consistent.
 Slider changes animate in 80 ms; reduced motion disables animation without
-changing the density values. The LAvM η slider ranges from −10 to 10 in steps of
+changing the density values. The LAvM η slider ranges from −5 to 5 in steps of
 0.05. Transformed sampling resolves its narrow peaks even when κ is below 1.
 
 ## Replace tutorial documents
