@@ -72,8 +72,9 @@
   function samplingAngles(kind, location, kappa) {
     // Uniform coverage plus extra resolution around the transformed narrow peak.
     const values = Array.from({length: 1441}, (_, i) => -Math.PI + TAU * i / 1440);
-    if (kappa >= 1) {
-      const width = Math.min(Math.PI - 1e-9, 8 / Math.sqrt(kappa));
+    // A large link shift can create a narrow peak even at zero concentration.
+    if (kind === "lavm" || kappa >= 1) {
+      const width = Math.min(Math.PI - 1e-9, 8 / Math.sqrt(Math.max(1, kappa)));
       for (let j = 0; j <= 384; j++) {
         const z = -width + 2 * width * j / 384;
         values.push(kind === "vm" ? wrap(z + location) : 2 * Math.atan(Math.tan(z / 2) + location));

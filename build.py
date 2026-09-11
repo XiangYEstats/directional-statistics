@@ -80,7 +80,9 @@ def build():
         shutil.copytree(ROOT / "static", stage / "assets")
         for tutorial in TUTORIALS:
             source = ROOT / "content" / "tutorials" / tutorial["slug"]
-            target = stage / "assets" / "tutorials" / tutorial["slug"]
+            # Keep the export's directory names so its own tutorial switcher
+            # and cross-document links work in full-document view as well.
+            target = stage / "assets" / "tutorials" / tutorial["asset_dir"]
             target.mkdir(parents=True)
             for name in [tutorial["filename"], *tutorial["data_files"]]:
                 shutil.copy2(source / name, target / name)

@@ -74,7 +74,7 @@ class DensityMathTests(unittest.TestCase):
                 self.assertAlmostEqual(actual, reference, delta=6.3e-12)
         self.assertTrue(math.isfinite(log_vm_density(0, 0, 1e6)))
         self.assertTrue(math.isfinite(log_vm_density(math.pi, 0, 1e6)))
-        for eta in (-4, 0, 4):
+        for eta in (-10, -4, 0, 4, 10):
             self.assertTrue(math.isfinite(log_lavm_density(2 * math.atan(eta), eta, 1e6)))
             self.assertTrue(math.isfinite(log_lavm_density(math.pi, eta, 1e6)))
 
@@ -88,7 +88,7 @@ class DensityMathTests(unittest.TestCase):
 
     def test_lavm_matches_stated_formula_and_r_transform(self):
         for x in (-3, -1, 0, 0.9, 3):
-            for eta in (-4, -1, 0, 1, 4):
+            for eta in (-10, -4, -1, 0, 1, 4, 10):
                 for kappa in (0, 0.1, 1, 10, 30):
                     y = math.tan(x / 2)
                     u = y - eta
@@ -111,7 +111,7 @@ class DensityMathTests(unittest.TestCase):
                 with self.subTest(distribution="vm", kappa=kappa, mu=mu):
                     integral = width * math.fsum(math.exp(log_vm_density(x, mu, kappa, log_scaled)) for x in points)
                     self.assertAlmostEqual(integral, 1, delta=2e-12)
-            for eta in (-4, -1, 0, 1, 4):
+            for eta in (-10, -4, -1, 0, 1, 4, 10):
                 with self.subTest(distribution="lavm", kappa=kappa, eta=eta):
                     integral = width * math.fsum(math.exp(log_lavm_density(x, eta, kappa, log_scaled)) for x in points)
                     self.assertAlmostEqual(integral, 1, delta=2e-12)
@@ -120,10 +120,10 @@ class DensityMathTests(unittest.TestCase):
         for kappa in (0, 0.1, 5, 100, 1e6):
             for x in (-math.pi, -2.5, 0, 0.9, math.pi):
                 self.assertAlmostEqual(log_lavm_density(x, 0, kappa), log_vm_density(x, 0, kappa), delta=5e-10)
-                for eta in (-4, 0, 4):
+                for eta in (-10, -4, 0, 4, 10):
                     self.assertEqual(log_lavm_density(-x, -eta, kappa), log_lavm_density(x, eta, kappa))
                     self.assertAlmostEqual(log_lavm_density(x + TAU, eta, kappa), log_lavm_density(x, eta, kappa), delta=1e-8)
-            for eta in (-4, 0, 4):
+            for eta in (-10, -4, 0, 4, 10):
                 self.assertEqual(log_lavm_density(-math.pi, eta, kappa), log_lavm_density(math.pi, eta, kappa))
                 self.assertEqual(log_lavm_density(math.pi, eta, kappa), log_vm_density(math.pi, 0, kappa))
 

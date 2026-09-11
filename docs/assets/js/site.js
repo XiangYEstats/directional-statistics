@@ -135,22 +135,50 @@
     });
   });
 
-  // Keep the original HTML independent while letting the outer page scroll.
+  // The supplied TOC needs the document's own scrolling viewport. Preserve its
+  // scripts and code folding, but switch the whole reader when changing tutorial.
+  const tutorialPages = new Map([...document.querySelectorAll("[data-tutorial-document]")].map(link => [
+    new URL(link.dataset.tutorialDocument, document.baseURI).href, link.href
+  ]));
   document.querySelectorAll("[data-tutorial-frame]").forEach(frame => {
-    const fit = () => {
+    let connectedDocument;
+    let observer;
+    let readyTimer;
+    const connect = () => {
       try {
         const doc = frame.contentDocument;
-        if (!doc?.body) return;
-        const resize = () => {
-          const height = Math.ceil(doc.body.getBoundingClientRect().height + 50);
-          if (Math.abs(frame.height - height) > 4) frame.height = String(Math.max(1000, height));
+        if (!doc?.body || doc.location.href === "about:blank") return false;
+        if (doc === connectedDocument) return true;
+        observer?.disconnect();
+        connectedDocument = doc;
+        const connectLinks = () => {
+          doc.querySelectorAll("a[href]").forEach(link => {
+            const destination = new URL(link.href);
+            const fragment = destination.hash;
+            destination.hash = "";
+            destination.search = "";
+            const reader = tutorialPages.get(destination.href);
+            if (!reader) return;
+            // A link to the current tutorial returns to its top; section links
+            // continue inside the document so its native TOC keeps working.
+            if (fragment && destination.pathname === doc.location.pathname) return;
+            link.href = reader + fragment;
+            link.target = "_top";
+          });
         };
-        resize();
-        new ResizeObserver(resize).observe(doc.body);
-        doc.fonts?.ready.then(resize);
-      } catch { /* The full-document link remains available if embedding fails. */ }
+        connectLinks();
+        // R Markdown initializes the series buttons in a deferred ready callback.
+        observer = new MutationObserver(connectLinks);
+        observer.observe(doc.body, { childList: true, subtree: true });
+        return true;
+      } catch { return true; /* The full-document link remains available if embedding fails. */ }
     };
-    frame.addEventListener("load", fit);
-    if (frame.contentDocument?.readyState === "complete") fit();
+    frame.addEventListener("load", () => { clearTimeout(readyTimer); connect(); });
+    // MathJax can delay load after the buttons become usable. Attach while the
+    // actual document is parsing, skipping the iframe's initial about:blank.
+    const connectWhenReady = () => {
+      if (!connect()) readyTimer = setTimeout(connectWhenReady, 50);
+    };
+    connectWhenReady();
   });
 })();

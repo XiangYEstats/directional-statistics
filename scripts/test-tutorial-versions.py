@@ -52,7 +52,7 @@ class TutorialVersionTests(unittest.TestCase):
                 second_url = validator.Document(page).iframes[0]["src"]
                 self.assertNotEqual(first_url, second_url)
                 self.assertEqual(first_url.split("?")[0], second_url.split("?")[0])
-                self.assertEqual(source.read_bytes(), (output / "assets" / "tutorials" / "pc-prior" / "pc_prior.html").read_bytes())
+                self.assertEqual(source.read_bytes(), (output / "assets" / "tutorials" / "pc_prior" / "pc_prior.html").read_bytes())
 
 
 if __name__ == "__main__":

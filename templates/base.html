@@ -52,7 +52,7 @@
           <div class="nav-panel tutorial-menu" id="tutorial-menu">
             <a class="menu-all" href="{{ url('tutorials/') }}">All tutorials <span aria-hidden="true">↗</span></a>
             <span class="menu-heading">Stan implementations</span>
-            {% for item in tutorials %}<a href="{{ url('tutorials/' + item.slug + '/') }}"{% if route == 'tutorials/' + item.slug + '/' %} aria-current="page"{% endif %}><span class="menu-number">0{{ loop.index }}</span>{{ item.menu_title }}</a>{% endfor %}
+            {% for item in tutorials %}<a href="{{ url('tutorials/' + item.slug + '/') }}" data-tutorial-document="{{ url('assets/tutorials/' + item.asset_dir + '/' + item.filename) }}"{% if route == 'tutorials/' + item.slug + '/' %} aria-current="page"{% endif %}><span class="menu-number">0{{ loop.index }}</span>{{ item.menu_title }}</a>{% endfor %}
           </div>
         </div>
         <a href="{{ url('software/') }}"{% if active == 'software' %} aria-current="page"{% endif %}>Package</a>

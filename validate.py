@@ -110,7 +110,7 @@ def validate(output):
         from math import pi
         from density_math import KAPPA_MAX, KAPPA_STEP
         expected_controls = {
-            "vm-location": (-pi, pi, "any"), "lavm-location": (-4, 4, 0.05),
+            "vm-location": (-pi, pi, "any"), "lavm-location": (-10, 10, 0.05),
             "vm-kappa": (0, KAPPA_MAX, KAPPA_STEP), "lavm-kappa": (0, KAPPA_MAX, KAPPA_STEP),
         }
         actual_controls = {item.get("id"): item for item in density_doc.inputs if item.get("type") == "range"}
@@ -129,13 +129,13 @@ def validate(output):
     for tutorial in TUTORIALS:
         for name in [tutorial["filename"], *tutorial["data_files"]]:
             source = ROOT / "content" / "tutorials" / tutorial["slug"] / name
-            copied = output / "assets" / "tutorials" / tutorial["slug"] / name
+            copied = output / "assets" / "tutorials" / tutorial["asset_dir"] / name
             if not copied.is_file() or sha256(source.read_bytes()).digest() != sha256(copied.read_bytes()).digest():
                 errors.append(f"Tutorial copy does not match source: {tutorial['slug']}/{name}")
 
         source_html = ROOT / "content" / "tutorials" / tutorial["slug"] / tutorial["filename"]
         version = sha256(source_html.read_bytes()).hexdigest()[:16]
-        document_url = f"../../assets/tutorials/{tutorial['slug']}/{tutorial['filename']}?v={version}"
+        document_url = f"../../assets/tutorials/{tutorial['asset_dir']}/{tutorial['filename']}?v={version}"
         reader = documents.get(output / "tutorials" / tutorial["slug"] / "index.html")
         if reader is None or len(reader.iframes) != 1 or reader.iframes[0].get("src") != document_url:
             errors.append(f"Tutorial iframe needs the current content version: {tutorial['slug']}")

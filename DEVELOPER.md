@@ -109,8 +109,9 @@ The density explorer uses radians: 0 at the right, π/2 at the top, ±π at the 
 and −π/2 at the bottom. Density rises outward from the reference circle;
 the unwrapped view runs from −π to π. Both views label their density scales and
 rescale continuously. Keep the Python and JavaScript implementations consistent.
-Slider changes animate; reduced motion disables animation without changing the
-density values.
+Slider changes animate in 80 ms; reduced motion disables animation without
+changing the density values. The LAvM η slider ranges from −10 to 10 in steps of
+0.05. Transformed sampling resolves its narrow peaks even when κ is below 1.
 
 ## Replace tutorial documents
 
@@ -140,8 +141,8 @@ Tutorial project: rendered .html exports
    document's date in both date fields:
 
    ```python
-   "date": "2026-09-07",
-   "display_date": "7 September 2026",
+   "date": "2026-09-11",
+   "display_date": "11 September 2026",
    ```
 
    Update `title`, `menu_title` and `summary` if the document's title or scope
@@ -164,7 +165,11 @@ Tutorial project: rendered .html exports
 7. After previewing, use the **Publish an update** instructions above to update
    GitHub Pages. Copying and rebuilding only update the local website.
 
-The build copies HTML unchanged into `docs/assets/tutorials/`. It does not modify
+The build copies HTML unchanged into `docs/assets/tutorials/<asset_dir>/`.
+`asset_dir` preserves the export folder names (`pc_prior`, `lavm`, and
+`circular_joint_regression`) so the supplied switcher and relative cross-links
+also work in full-document view. The public reading-page slugs are unchanged.
+It does not modify
 the tutorial project; changes there must be copied into this website before
 rebuilding. To change a tutorial's appearance, edit its stylesheet, render it,
 copy the HTML and rebuild. Keep exports self-contained, or update the build to
@@ -173,6 +178,13 @@ copy any companion assets. MathJax equation rendering requires internet access.
 The build adds a SHA-256 `?v=<hash>` suffix to each tutorial's iframe, full-document
 and HTML-download URLs. This refreshes cached documents without renaming files
 or changing the reading-page routes.
+
+Each embedded document has its own scrolling viewport so its supplied sticky
+contents menu and active-section tracking work. The supplied Stan program
+disclosures and copy buttons run unchanged. `site.js` connects the exported
+tutorial links to the corresponding reading pages using `target="_top"`, so
+switching tutorials also updates the page title and downloads. It connects
+before iframe load because MathJax can delay that event.
 
 Stable reading-page links:
 
@@ -197,6 +209,7 @@ With Node available, also check the browser-side mathematics and controls:
 ```bash
 node scripts/test-circular-math.cjs
 node scripts/test-density-browser.cjs
+node scripts/test-tutorial-navigation.cjs
 ```
 
 Before publishing, check changed pages in a browser at desktop and mobile widths.

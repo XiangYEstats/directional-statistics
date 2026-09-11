@@ -7,8 +7,8 @@ from density_math import log_bessel_i0_scaled, log_lavm_density, log_vm_density
 
 def density_panel(kind, location, kappa=2.0):
     angles = [-pi + 2 * pi * i / 1440 for i in range(1441)]
-    if kappa >= 1:
-        width = min(pi - 1e-9, 8 / sqrt(kappa))
+    if kind == "lavm" or kappa >= 1:
+        width = min(pi - 1e-9, 8 / sqrt(max(1, kappa)))
         for j in range(385):
             z = -width + 2 * width * j / 384
             angles.append((z + location + pi) % (2 * pi) - pi if kind == "vm" else 2 * atan(tan(z / 2) + location))

@@ -8,8 +8,8 @@
       <fieldset class="density-controls" data-density-controls disabled>
         <legend class="sr-only">Adjust {{ panel.name }} parameters</legend>
         <label for="{{ panel.kind }}-location">{{ 'Mean direction · μ' if panel.kind == 'vm' else 'Link shift · η' }}<output id="{{ panel.kind }}-location-value" for="{{ panel.kind }}-location" data-density-location-output>{{ '0 rad' if panel.kind == 'vm' else '1.00' }}</output></label>
-        <input id="{{ panel.kind }}-location" data-density-location type="range" min="{{ density_settings.mu_min if panel.kind == 'vm' else -4 }}" max="{{ density_settings.mu_max if panel.kind == 'vm' else 4 }}" step="{{ 'any' if panel.kind == 'vm' else 0.05 }}" value="{{ 0 if panel.kind == 'vm' else 1 }}" aria-describedby="{{ panel.kind }}-parameter-note">
-        <div class="density-range-labels" aria-hidden="true"><span>{{ '−π' if panel.kind == 'vm' else '−4' }}</span><span>0</span><span>{{ 'π' if panel.kind == 'vm' else '4' }}</span></div>
+        <input id="{{ panel.kind }}-location" data-density-location type="range" min="{{ density_settings.mu_min if panel.kind == 'vm' else -10 }}" max="{{ density_settings.mu_max if panel.kind == 'vm' else 10 }}" step="{{ 'any' if panel.kind == 'vm' else 0.05 }}" value="{{ 0 if panel.kind == 'vm' else 1 }}" aria-describedby="{{ panel.kind }}-parameter-note">
+        <div class="density-range-labels" aria-hidden="true"><span>{{ '−π' if panel.kind == 'vm' else '−10' }}</span><span>0</span><span>{{ 'π' if panel.kind == 'vm' else '10' }}</span></div>
         <label for="{{ panel.kind }}-kappa">{{ 'Concentration · κ' if panel.kind == 'vm' else 'Base concentration · κ' }}<output for="{{ panel.kind }}-kappa" data-density-kappa-output>2.0</output></label>
         <input id="{{ panel.kind }}-kappa" data-density-kappa type="range" min="0" max="{{ density_settings.kappa_max }}" step="{{ density_settings.kappa_step }}" value="2" aria-describedby="{{ panel.kind }}-parameter-note">
         <div class="density-range-labels" aria-hidden="true"><span>0</span><span>{{ density_settings.kappa_max }}</span></div>
